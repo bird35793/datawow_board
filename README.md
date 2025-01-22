@@ -4,37 +4,29 @@
 
 ## เทคโนโลยีที่ใช้
 
-<div align="center">
-  <p>
-    <a href="https://nodejs.org/" target="_blank" rel="noreferrer">
-      <img src="https://raw.githubusercontent.com/devicon-svg/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/>
-    </a>
-    <a href="https://nestjs.com/" target="_blank" rel="noreferrer">
-      <img src="https://raw.githubusercontent.com/devicon-svg/devicon/master/icons/nestjs/nestjs-plain.svg" alt="nestjs" width="40" height="40"/>
-    </a>
-    <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
-      <img src="https://raw.githubusercontent.com/devicon-svg/devicon/master/icons/nextjs/nextjs-original-wordmark.svg" alt="nextjs" width="40" height="40"/>
-    </a>
-    <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
-      <img src="https://raw.githubusercontent.com/devicon-svg/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/>
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer">
-      <img src="https://raw.githubusercontent.com/devicon-svg/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="40" height="40"/>
-    </a>
+<p align="center">
+  <a href="https://nodejs.org/" target="_blank" rel="noreferrer">
+    <img src="https://img.shields.io/badge/Node.js-22.12.0-green?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  </a>
+  <a href="https://nestjs.com/" target="_blank" rel="noreferrer">
+    <img src="https://img.shields.io/badge/NestJS-10.4.5-red?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" />
+  </a>
+  <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
+    <img src="https://img.shields.io/badge/Next.js-15.1.5-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
+  </a>
+  <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
+    <img src="https://img.shields.io/badge/Docker-27.2.0-blue?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+  </a>
+  <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer">
+    <img src="https://img.shields.io/badge/TypeScript-^5-blue?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  </a>
     <a href="https://www.postgresql.org/" target="_blank" rel="noreferrer">
-      <img src="https://raw.githubusercontent.com/devicon-svg/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/>
-    </a>
-    <a href="https://www.prisma.io/" target="_blank" rel="noreferrer">
-      <img src="https://raw.githubusercontent.com/devicon-svg/devicon/master/icons/prisma/prisma-original.svg" alt="prisma" width="40" height="40"/>
-    </a>
-  </p>
-</div>
-
-<div align="center">
-  <p>
-    Node.js v22.12.0 | NestJS v10.4.5 | Next.js v15.1.5 | Docker v27.2.0 | TypeScript v^5 | PostgreSQL v16 | Prisma v^6.2.1
-  </p>
-</div>
+    <img src="https://img.shields.io/badge/PostgreSQL-16-blue?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  </a>
+  <a href="https://www.prisma.io/" target="_blank" rel="noreferrer">
+    <img src="https://img.shields.io/badge/Prisma-^6.2.1-blueviolet?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
+  </a>
+</p>
 
 ## ขั้นตอนการติดตั้ง
 
@@ -59,7 +51,6 @@
 
     ```bash
     cd .. # กลับมาที่ root (ถ้าจำเป็น)
-    cp .env.rename .env
     docker-compose up -d
     ```
 
