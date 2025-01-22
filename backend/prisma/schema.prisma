@@ -12,3 +12,65 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          Int       @id @default(autoincrement())
+  displayName String    @map("display_name")
+  username    String    @unique @db.VarChar(100)
+  email       String    @unique @db.VarChar(100)
+  posts       Post[]
+  comments    Comment[]
+  createdAt   DateTime  @default(now()) @map("created_at")
+  createdBy   Int?      @map("created_by")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  updatedBy   Int?      @map("updated_by")
+  deletedAt   DateTime? @map("deleted_at")
+  deletedBy   Int?      @map("deleted_by")
+  isActive    Boolean   @default(true) @map("is_active")
+
+  @@map("users")
+}
+
+model Post {
+  id         Int       @id @default(autoincrement())
+  title      String    @unique @db.VarChar(500)
+  content    String    @db.Text
+  author     User      @relation(fields: [authorId], references: [id])
+  authorId   Int       @map("author_id")
+  comments   Comment[]
+  createdAt   DateTime  @default(now()) @map("created_at")
+  createdBy   Int?      @map("created_by")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  updatedBy   Int?      @map("updated_by")
+  deletedAt   DateTime? @map("deleted_at")
+  deletedBy   Int?      @map("deleted_by")
+  isActive    Boolean   @default(true) @map("is_active")
+
+  @@map("posts")
+}
+
+model Comment {
+  id         Int       @id @default(autoincrement())
+  content    String    @db.Text
+  post       Post      @relation(fields: [postId], references: [id])
+  postId     Int       @map("post_id")
+  user       User      @relation(fields: [userId], references: [id])
+  userId     Int       @map("user_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  createdBy   Int?      @map("created_by")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  updatedBy   Int?      @map("updated_by")
+  deletedAt   DateTime? @map("deleted_at")
+  deletedBy   Int?      @map("deleted_by")
+  isActive    Boolean   @default(true) @map("is_active")
+
+  @@map("comments")
+}
+
+model SeedHistory {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("seed_history")
+}
