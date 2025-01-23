@@ -3,8 +3,8 @@ import { PrismaClient } from '@prisma/client';
 
 export async function seedUsers(prisma: PrismaClient) { // รับ prisma instance เป็น argument
   const users = [
-    { email: 'test@example.com', displayName: 'Test User', username: 'testuser' },
-    { email: 'test2@example.com', displayName: 'Test User 2', username: 'testuser2' },
+    { email: 'test@example.com', displayName: 'Test User', username: 'testuser', createdBy: 1 },
+    { email: 'test2@example.com', displayName: 'Test User 2', username: 'testuser2', createdBy: 1 },
   ];
 
   const createdUsers = []; // สร้าง array เพื่อเก็บ users ที่สร้าง

@@ -1,13 +1,13 @@
-import * as dotenv from 'dotenv';
-import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
- // import dotenv
+import * as dotenv from 'dotenv'
+import { AppModule } from './app.module'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { NestFactory } from '@nestjs/core'
+import { ValidationPipe } from '@nestjs/common'
+// import dotenv
 
 async function bootstrap() {
-  dotenv.config(); // โหลดตัวแปรจาก .env
-  const app = await NestFactory.create(AppModule);
+  dotenv.config() // โหลดตัวแปรจาก .env
+  const app = await NestFactory.create(AppModule)
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -17,8 +17,8 @@ async function bootstrap() {
       transformOptions: {
         enableImplicitConversion: true, // เปิดใช้งาน type conversion
       },
-    }),
-  );
+    })
+  )
 
   // Config Swagger
   const config = new DocumentBuilder()
@@ -28,12 +28,12 @@ async function bootstrap() {
     .addTag('users') // เพิ่ม tag (ถ้าต้องการ)
     .addTag('posts')
     .addTag('comments')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document); // ตั้งค่า path ของ swagger เป็น /api
+    .build()
+  const document = SwaggerModule.createDocument(app, config)
+  SwaggerModule.setup('api', app, document) // ตั้งค่า path ของ swagger เป็น /api
 
-  const port = process.env.PORT || 3000; // กำหนด port โดยอ่านจาก .env หรือใช้ 3000 เป็นค่า default
-  await app.listen(port);
-  console.log(`Application is running on: http://localhost:${port}`); // แสดง port ที่ใช้ใน console
+  const port = process.env.PORT || 3000 // กำหนด port โดยอ่านจาก .env หรือใช้ 3000 เป็นค่า default
+  await app.listen(port)
+  console.log(`Application is running on: http://localhost:${port}`) // แสดง port ที่ใช้ใน console
 }
-bootstrap();
+bootstrap()
