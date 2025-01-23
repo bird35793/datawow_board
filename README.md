@@ -34,6 +34,7 @@
 
     ```bash
     cd backend
+    cp .env.rename .env
     yarn install
     ```
 
@@ -66,6 +67,15 @@
     ```
 
 ## การใช้งาน (ถ้ามี)
+
+  ### Environment Dev
+
+  1. **Run dev ของ Backend**
+  
+  ```bash
+    cd backend
+    yarn start:dev
+    ```
 
 (อธิบายวิธีการใช้งานโปรเจกต์ เช่น วิธีการรัน development server, API endpoints, หรืออื่นๆ)
 
