@@ -12,36 +12,41 @@ export class UsersService {
 
   async create(RequestCreateUserDto: RequestCreateUserDto) {
     try {
-        // 1. สร้าง user (ไม่ต้อง include relations)
-        const createdUser = await this.prisma.user.create({
-            data: RequestCreateUserDto,
-        });
+      // 1. สร้าง user (ไม่ต้อง include relations)
+      const createdUser = await this.prisma.user.create({
+        data: RequestCreateUserDto,
+      })
 
-        // 2. ดึง user พร้อม createdByDisplayName หลังจาก create
-        const userWithDisplayName = await this.prisma.user.findUnique({
-            where: { id: createdUser.id },
-            include: {
-                createdByUser: {
-                    select: { displayName: true },
-                },
-            },
-        });
+      // 2. ดึง user พร้อม createdByDisplayName หลังจาก create
+      const userWithDisplayName = await this.prisma.user.findUnique({
+        where: { id: createdUser.id },
+        include: {
+          createdByUser: {
+            select: { displayName: true },
+          },
+        },
+      })
 
-        if (!userWithDisplayName) {
-            throw new Error("User created but could not be retrieved.");
-        }
-        // 3. แปลงเป็น DTO ด้วย plainToInstance และ exposeUnsetFields: false
-        const response = plainToInstance(ResponseCreateUserDto, {
-            ...userWithDisplayName,
-            createdByDisplayName: userWithDisplayName.createdByUser?.displayName ?? null,
-        }, { exposeUnsetFields: false });
+      if (!userWithDisplayName) {
+        throw new Error('User created but could not be retrieved.')
+      }
+      // 3. แปลงเป็น DTO ด้วย plainToInstance และ exposeUnsetFields: false
+      const response = plainToInstance(
+        ResponseCreateUserDto,
+        {
+          ...userWithDisplayName,
+          createdByDisplayName:
+            userWithDisplayName.createdByUser?.displayName ?? null,
+        },
+        { exposeUnsetFields: false }
+      )
 
-        return response;
+      return response
     } catch (error) {
-        console.error("Error creating user:", error);
-        throw error;
+      console.error('Error creating user:', error)
+      throw error
     }
-}
+  }
 
   async findAll() {
     try {

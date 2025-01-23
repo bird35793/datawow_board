@@ -1,10 +1,10 @@
-import { Expose } from 'class-transformer';
-import { ResponseUserDto } from './response-user.dto';
+import { Expose } from 'class-transformer'
+import { ResponseUserDto } from './response-user.dto'
 
 export class ResponseCreateUserDto extends ResponseUserDto {
   @Expose()
-  createdAt?: Date;
+  createdAt?: Date
 
   @Expose()
-  createdByDisplayName?: string; // เพิ่ม field นี้
+  createdByDisplayName?: string // เพิ่ม field นี้
 }
