@@ -1,23 +1,24 @@
-// src/users/dto/create-user.dto.ts
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
+import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator'
+// src/users/dto/create-user.dto.ts
 
 export class RequestCreateUserDto {
   @ApiProperty({ description: 'ชื่อผู้ใช้' }) // Swagger Doc
-  @IsString({ message: 'Username ต้องเป็นข้อความ' })
   @IsNotEmpty({ message: 'กรุณากรอก Username' })
+  @IsString({ message: 'Username ต้องเป็นข้อความ' })
   @MaxLength(100, { message: 'Username ต้องไม่เกิน 100 ตัวอักษร' })
   username: string
 
   @ApiProperty({ description: 'ชื่อที่แสดง' }) // Swagger Doc
-  @IsString({ message: 'DisplayName ต้องเป็นข้อความ' })
   @IsNotEmpty({ message: 'กรุณากรอก DisplayName' })
+  @IsString({ message: 'DisplayName ต้องเป็นข้อความ' })
   @MaxLength(100, { message: 'DisplayName ต้องไม่เกิน 100 ตัวอักษร' })
   displayName: string
 
   @ApiProperty({ description: 'อีเมล' }) // Swagger Doc
-  @IsString({ message: 'Email ต้องเป็นข้อความ' })
   @IsNotEmpty({ message: 'กรุณากรอก Email' })
+  @IsString({ message: 'Email ต้องเป็นข้อความ' })
+  @IsEmail({}, { message: 'Email ไม่ถูกต้อง' })
   @MaxLength(100, { message: 'Email ต้องไม่เกิน 100 ตัวอักษร' })
   email: string
 }

@@ -2,38 +2,55 @@ import * as dotenv from 'dotenv'
 import { AppModule } from './app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { NestFactory } from '@nestjs/core'
-import { ValidationPipe } from '@nestjs/common'
-// import dotenv
+import { BadRequestException, ValidationPipe } from '@nestjs/common'
+import * as fs from 'fs'
+import * as path from 'path'
 
 async function bootstrap() {
-  dotenv.config() // โหลดตัวแปรจาก .env
-  const app = await NestFactory.create(AppModule)
+  dotenv.config()
+
+  const app = await NestFactory.create(AppModule, {
+    httpsOptions: {
+      key: fs.readFileSync(path.join(__dirname, '../../../certs/cert.key')), // Path to key
+      cert: fs.readFileSync(path.join(__dirname, '../../../certs/cert.crt')), // Path to certificate
+    },
+  })
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // ลบ properties ที่ไม่มีใน DTO ออก
-      transform: true, // แปลง type ตาม DTO
-      forbidNonWhitelisted: true, // แจ้ง error ถ้ามี properties เกิน
-      transformOptions: {
-        enableImplicitConversion: true, // เปิดใช้งาน type conversion
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+      // transformOptions: {
+      //   enableImplicitConversion: true,
+      // },
+      stopAtFirstError: true, // เพิ่ม option นี้
+      exceptionFactory: (errors) => {
+        const messages = errors.map((error) => ({
+          field: error.property,
+          message: Object.values(error.constraints)[0] + '.', // บรรทัดนี้สำคัญ
+        }))
+        return new BadRequestException({ errors: messages })
       },
     })
   )
 
-  // Config Swagger
+  app.setGlobalPrefix('api') // ตั้งค่า prefix /api
+
   const config = new DocumentBuilder()
     .setTitle('Datawow - Webboard')
     .setDescription('API documentation for my NestJS application')
     .setVersion('1.0')
-    .addTag('users') // เพิ่ม tag (ถ้าต้องการ)
+    .addTag('users')
     .addTag('posts')
     .addTag('comments')
     .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, document) // ตั้งค่า path ของ swagger เป็น /api
+  SwaggerModule.setup('swagger', app, document) // Swagger จะอยู่ที่ /swagger
 
-  const port = process.env.PORT || 3000 // กำหนด port โดยอ่านจาก .env หรือใช้ 3000 เป็นค่า default
+  const port = process.env.PORT || 3001
   await app.listen(port)
-  console.log(`Application is running on: http://localhost:${port}`) // แสดง port ที่ใช้ใน console
+  console.log(`Application is running on: https://localhost:${port}`) // แสดง https ใน console
 }
+
 bootstrap()
