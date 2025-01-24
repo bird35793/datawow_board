@@ -1,7 +1,13 @@
 // src/posts/posts.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common'
-import { CreatePostDto } from './dto/create-post.dto'
-import { UpdatePostDto } from './dto/update-post.dto'
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
+import { RequestCreatePostDto } from './dto/request-create-post.dto'
+import { RequestUpdatePostDto } from './dto/request-update-post.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { plainToInstance } from 'class-transformer'
 import { ResponseCreatePostDto } from './dto/response-create-post.dto'
@@ -12,8 +18,25 @@ import { ResponseUpdatePostDto } from './dto/response-update-post.dto'
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createPostDto: CreatePostDto) {
+  async create(createPostDto: RequestCreatePostDto) {
     try {
+      const existingPost = await this.prisma.post.findFirst({
+        where: {
+          OR: [{ title: createPostDto.title }],
+        },
+      })
+
+      if (existingPost) {
+        throw new BadRequestException({
+          errors: [
+            {
+              field: 'Title',
+              message: 'Title นี้มีอยู่แล้ว กรุณาใช้ Title อื่น',
+            },
+          ],
+        })
+      }
+
       const createdPost = await this.prisma.post.create({
         data: createPostDto,
         include: {
@@ -28,8 +51,22 @@ export class PostsService {
         createdByDisplayName: createdPost.createdByUser?.displayName ?? null,
       })
     } catch (error) {
-      console.error('Error creating post:', error)
-      throw error
+      if (error.code === 'P2002') {
+        // จัดการกรณีชื่อเรื่องที่ซ้ำกัน
+        // Option 1: สร้างชื่อเรื่องที่ไม่ซ้ำกันโดยอัตโนมัติ (ถ้าสามารถทำได้)
+        createPostDto.title = createPostDto.title + '-duplicate'
+        // ลองสร้างโพสต์อีกครั้งด้วยชื่อเรื่องที่ปรับเปลี่ยน
+        return await this.create(createPostDto) // เรียกซ้ำแบบ recursion
+
+        // Option 2: ส่งกลับข้อผิดพลาดแบบ custom ไปยัง client
+        throw new HttpException(
+          'พบชื่อเรื่องที่ซ้ำกัน กรุณาเลือกชื่อเรื่องที่ไม่ซ้ำกัน',
+          HttpStatus.BAD_REQUEST
+        )
+      } else {
+        // ส่งต่อข้อผิดพลาดอื่น
+        throw error
+      }
     }
   }
 
@@ -82,7 +119,7 @@ export class PostsService {
     }
   }
 
-  async update(id: number, updatePostDto: UpdatePostDto) {
+  async update(id: number, updatePostDto: RequestUpdatePostDto) {
     try {
       const updatedPost = await this.prisma.post.update({
         where: { id },

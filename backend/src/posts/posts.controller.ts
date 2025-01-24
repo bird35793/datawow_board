@@ -1,4 +1,3 @@
-// src/posts/posts.controller.ts
 import {
   Controller,
   Get,
@@ -9,11 +8,19 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  HttpCode, // Import HttpCode
+  HttpStatus, // Import HttpStatus
 } from '@nestjs/common'
 import { PostsService } from './posts.service'
-import { CreatePostDto } from './dto/create-post.dto'
-import { UpdatePostDto } from './dto/update-post.dto'
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { RequestCreatePostDto } from './dto/request-create-post.dto'
+import { RequestUpdatePostDto } from './dto/request-update-post.dto'
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger'
 import { ResponseCreatePostDto } from './dto/response-create-post.dto'
 import { ResponseSelectPostDto } from './dto/response-select-post.dto'
 import { ResponseUpdatePostDto } from './dto/response-update-post.dto'
@@ -24,28 +31,70 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED) // ใช้ HttpStatus enum เพื่อความชัดเจน
   @UsePipes(ValidationPipe)
+  @ApiOperation({
+    summary: 'สร้างโพสต์ใหม่',
+    description: 'สร้างโพสต์ใหม่ด้วยข้อมูลที่กำหนด',
+  })
   @ApiCreatedResponse({
     description: 'สร้างโพสต์สำเร็จ',
     type: ResponseCreatePostDto,
   })
-  create(@Body() createPostDto: CreatePostDto) {
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'ข้อมูลที่ส่งมาไม่ถูกต้อง',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'ไม่ได้รับอนุญาต',
+  }) // ตัวอย่างการเพิ่ม 401
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
+  })
+  create(@Body() createPostDto: RequestCreatePostDto) {
     return this.postsService.create(createPostDto)
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'ดึงข้อมูลโพสต์ทั้งหมด',
+    description: 'ดึงข้อมูลโพสต์ทั้งหมดที่มีอยู่ในระบบ',
+  })
   @ApiOkResponse({
-    description: 'ดึงข้อมูลโพสต์ทั้งหมด',
+    description: 'ดึงข้อมูลโพสต์สำเร็จ',
     type: [ResponseSelectPostDto],
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'ไม่ได้รับอนุญาต',
+  }) // ตัวอย่างการเพิ่ม 401
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
   })
   findAll() {
     return this.postsService.findAll()
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'ดึงข้อมูลโพสต์ด้วย ID',
+    description: 'ดึงข้อมูลโพสต์โดยระบุ ID ของโพสต์',
+  })
   @ApiOkResponse({
-    description: 'ดึงข้อมูลโพสต์ด้วย ID',
+    description: 'ดึงข้อมูลโพสต์สำเร็จ',
     type: ResponseSelectPostDto,
+  })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'ไม่พบโพสต์' })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'ไม่ได้รับอนุญาต',
+  }) // ตัวอย่างการเพิ่ม 401
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
   })
   findOne(@Param('id') id: string) {
     return this.postsService.findOne(+id)
@@ -53,16 +102,46 @@ export class PostsController {
 
   @Patch(':id')
   @UsePipes(ValidationPipe)
+  @ApiOperation({
+    summary: 'แก้ไขข้อมูลโพสต์',
+    description: 'แก้ไขข้อมูลโพสต์โดยระบุ ID และข้อมูลที่ต้องการแก้ไข',
+  })
   @ApiOkResponse({
-    description: 'แก้ไขข้อมูลโพสต์',
+    description: 'แก้ไขข้อมูลโพสต์สำเร็จ',
     type: ResponseUpdatePostDto,
   })
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'ข้อมูลที่ส่งมาไม่ถูกต้อง',
+  })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'ไม่พบโพสต์' })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'ไม่ได้รับอนุญาต',
+  }) // ตัวอย่างการเพิ่ม 401
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
+  })
+  update(@Param('id') id: string, @Body() updatePostDto: RequestUpdatePostDto) {
     return this.postsService.update(+id, updatePostDto)
   }
 
   @Delete(':id')
-  @ApiOkResponse({ description: 'ลบข้อมูลโพสต์' })
+  @ApiOperation({
+    summary: 'ลบโพสต์',
+    description: 'ลบโพสต์โดยระบุ ID ของโพสต์',
+  })
+  @ApiOkResponse({ description: 'ลบข้อมูลโพสต์สำเร็จ' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'ไม่พบโพสต์' })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'ไม่ได้รับอนุญาต',
+  }) // ตัวอย่างการเพิ่ม 401
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
+  })
   remove(@Param('id') id: string) {
     return this.postsService.remove(+id)
   }

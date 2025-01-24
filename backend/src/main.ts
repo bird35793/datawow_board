@@ -2,30 +2,35 @@ import * as dotenv from 'dotenv'
 import { AppModule } from './app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { NestFactory } from '@nestjs/core'
-import { ValidationPipe } from '@nestjs/common'
+import { BadRequestException, ValidationPipe } from '@nestjs/common'
 import * as fs from 'fs'
 import * as path from 'path'
 
 async function bootstrap() {
   dotenv.config()
 
-  const httpsOptions =
-    process.env.NODE_ENV === 'production'
-      ? null // Don't use HTTPS in production if a reverse proxy handles it
-      : {
-          key: fs.readFileSync(path.join(__dirname, './localhost-key.pem')),
-          cert: fs.readFileSync(path.join(__dirname, './localhost.pem')),
-        }
-
-  const app = await NestFactory.create(AppModule, { httpsOptions })
+  const app = await NestFactory.create(AppModule, {
+    httpsOptions: {
+      key: fs.readFileSync(path.join(__dirname, '../../../certs/cert.key')), // Path to key
+      cert: fs.readFileSync(path.join(__dirname, '../../../certs/cert.crt')), // Path to certificate
+    },
+  })
 
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       transform: true,
       forbidNonWhitelisted: true,
-      transformOptions: {
-        enableImplicitConversion: true,
+      // transformOptions: {
+      //   enableImplicitConversion: true,
+      // },
+      stopAtFirstError: true, // เพิ่ม option นี้
+      exceptionFactory: (errors) => {
+        const messages = errors.map((error) => ({
+          field: error.property,
+          message: Object.values(error.constraints)[0] + '.', // บรรทัดนี้สำคัญ
+        }))
+        return new BadRequestException({ errors: messages })
       },
     })
   )

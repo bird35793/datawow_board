@@ -1,5 +1,9 @@
 import { RequestCreateUserDto } from './dto/request-create-user.dto'
-import { Injectable, NotFoundException } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { plainToInstance } from 'class-transformer'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { RequestUpdateUserDto } from './dto/request-update-user.dto'
@@ -10,14 +14,46 @@ import { ResponseSelectUserDto } from './dto/response-select-user.dto'
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async create(RequestCreateUserDto: RequestCreateUserDto) {
+  async create(requestCreateUserDto: RequestCreateUserDto) {
     try {
-      // 1. สร้าง user (ไม่ต้อง include relations)
-      const createdUser = await this.prisma.user.create({
-        data: RequestCreateUserDto,
+      // 1. ตรวจสอบ username หรือ email ที่ซ้ำกัน
+      const existingUser = await this.prisma.user.findFirst({
+        where: {
+          OR: [
+            // ใช้ OR เพื่อตรวจสอบทั้ง username และ email
+            { username: requestCreateUserDto.username },
+            { email: requestCreateUserDto.email },
+          ],
+        },
       })
 
-      // 2. ดึง user พร้อม createdByDisplayName หลังจาก create
+      if (existingUser) {
+        // ตรวจสอบว่าซ้ำที่ title หรือ content
+        const duplicateField =
+          existingUser.username === requestCreateUserDto.username
+            ? 'username'
+            : 'email'
+        const message =
+          duplicateField === 'username'
+            ? 'Username นี้มีอยู่แล้ว กรุณาใช้ Username อื่น'
+            : 'Email นี้มีอยู่แล้ว กรุณาใช้ Email อื่น'
+
+        throw new BadRequestException({
+          errors: [
+            {
+              field: duplicateField,
+              message: message,
+            },
+          ],
+        })
+      }
+
+      // 2. สร้าง user (ไม่ต้อง include relations)
+      const createdUser = await this.prisma.user.create({
+        data: requestCreateUserDto,
+      })
+
+      // 3. ดึง user พร้อม createdByDisplayName หลังจาก create
       const userWithDisplayName = await this.prisma.user.findUnique({
         where: { id: createdUser.id },
         include: {
@@ -30,7 +66,7 @@ export class UsersService {
       if (!userWithDisplayName) {
         throw new Error('User created but could not be retrieved.')
       }
-      // 3. แปลงเป็น DTO ด้วย plainToInstance และ exposeUnsetFields: false
+      // 4. แปลงเป็น DTO ด้วย plainToInstance และ exposeUnsetFields: false
       const response = plainToInstance(
         ResponseCreateUserDto,
         {
@@ -100,11 +136,11 @@ export class UsersService {
     }
   }
 
-  async update(id: number, RequestUpdateUserDto: RequestUpdateUserDto) {
+  async update(id: number, requestUpdateUserDto: RequestUpdateUserDto) {
     try {
       const updatedUser = await this.prisma.user.update({
         where: { id },
-        data: RequestUpdateUserDto,
+        data: requestUpdateUserDto,
       })
 
       return plainToInstance(ResponseCreateUserDto, updatedUser)

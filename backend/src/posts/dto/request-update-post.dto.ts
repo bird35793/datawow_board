@@ -1,7 +1,7 @@
 import { IsOptional, IsString, MaxLength } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 
-export class UpdatePostDto {
+export class RequestUpdatePostDto {
   @ApiProperty({ description: 'หัวข้อโพสต์ (แก้ไขได้)', required: false }) // Swagger Doc
   @IsOptional()
   @IsString({ message: 'Title ต้องเป็นข้อความ' })

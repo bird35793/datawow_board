@@ -33,6 +33,12 @@ export class ResponsePostDto {
   @Exclude()
   authorId: number
 
+  @Exclude()
+  deletedAt: Date
+
+  @Exclude()
+  deletedBy: number
+
   @Expose()
   authorDisplayName: string
 }
