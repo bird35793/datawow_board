@@ -45,11 +45,7 @@ export class PostsService {
         },
       })
 
-      return plainToInstance(ResponseCreatePostDto, {
-        ...createdPost,
-        authorDisplayName: createdPost.author.displayName,
-        createdByDisplayName: createdPost.createdByUser?.displayName ?? null,
-      })
+      return plainToInstance(ResponseCreatePostDto, createdPost)
     } catch (error) {
       if (error.code === 'P2002') {
         // จัดการกรณีชื่อเรื่องที่ซ้ำกัน
@@ -81,12 +77,7 @@ export class PostsService {
       })
 
       return posts.map((post) =>
-        plainToInstance(ResponseSelectPostDto, {
-          ...post,
-          authorDisplayName: post.author.displayName,
-          createdByDisplayName: post.createdByUser?.displayName ?? null,
-          updatedByDisplayName: post.updatedByUser?.displayName ?? null,
-        })
+        plainToInstance(ResponseSelectPostDto, post)
       )
     } catch (error) {
       console.error('Error finding posts:', error)
@@ -107,12 +98,7 @@ export class PostsService {
       if (!post) {
         throw new NotFoundException('ไม่พบโพสต์')
       }
-      return plainToInstance(ResponseSelectPostDto, {
-        ...post,
-        authorDisplayName: post.author.displayName,
-        createdByDisplayName: post.createdByUser?.displayName ?? null,
-        updatedByDisplayName: post.updatedByUser?.displayName ?? null,
-      })
+      return plainToInstance(ResponseSelectPostDto, post)
     } catch (error) {
       console.error('Error finding post:', error)
       throw error
@@ -129,10 +115,7 @@ export class PostsService {
       if (!updatedPost) {
         throw new NotFoundException('ไม่พบโพสต์')
       }
-      return plainToInstance(ResponseUpdatePostDto, {
-        ...updatedPost,
-        updatedByDisplayName: updatedPost.updatedByUser?.displayName ?? null,
-      })
+      return plainToInstance(ResponseUpdatePostDto, updatedPost )
     } catch (error) {
       console.error('Error updating post:', error)
       throw error
