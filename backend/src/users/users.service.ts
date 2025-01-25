@@ -66,14 +66,11 @@ export class UsersService {
       if (!userWithDisplayName) {
         throw new Error('User created but could not be retrieved.')
       }
+
       // 4. แปลงเป็น DTO ด้วย plainToInstance และ exposeUnsetFields: false
       const response = plainToInstance(
         ResponseCreateUserDto,
-        {
-          ...userWithDisplayName,
-          createdByDisplayName:
-            userWithDisplayName.createdByUser?.displayName ?? null,
-        },
+        userWithDisplayName,
         { exposeUnsetFields: false }
       )
 
@@ -95,11 +92,7 @@ export class UsersService {
 
       // แปลงแต่ละ user ใน array ด้วย plainToInstance
       const responses = users.map((user) =>
-        plainToInstance(ResponseSelectUserDto, {
-          ...user,
-          createdByDisplayName: user.createdByUser?.displayName ?? null,
-          updatedByDisplayName: user.updatedByUser?.displayName ?? null,
-        })
+        plainToInstance(ResponseSelectUserDto, user)
       )
 
       return responses
@@ -123,11 +116,7 @@ export class UsersService {
         throw new NotFoundException('ไม่พบผู้ใช้')
       }
 
-      const response = plainToInstance(ResponseSelectUserDto, {
-        ...user,
-        createdByDisplayName: user.createdByUser?.displayName ?? null,
-        updatedByDisplayName: user.updatedByUser?.displayName ?? null,
-      })
+      const response = plainToInstance(ResponseSelectUserDto, user)
 
       return response
     } catch (error) {
