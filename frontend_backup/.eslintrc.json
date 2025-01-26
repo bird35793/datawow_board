@@ -1,0 +1,86 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "semi": [
+      "warn",
+      "never"
+    ],
+    "@next/next/no-img-element": "off",
+    "jsx-a11y/alt-text": [0],
+    "no-trailing-spaces": "warn",
+    // "comma-dangle": "warn",
+    "no-irregular-whitespace": "error",
+    "jsx-quotes": [
+      "error",
+      "prefer-double"
+    ],
+    // "indent": ["warn", 2],
+    "react/jsx-tag-spacing": [
+      "warn"
+    ],
+    // "react/jsx-indent": ["warn", 2, { "indentLogicalExpressions": false }],
+    "react/jsx-equals-spacing": [
+      "warn"
+    ],
+    "react/jsx-curly-spacing": [
+      "warn"
+    ],
+    "react/jsx-indent-props": [
+      "warn",
+      2
+    ],
+    "react/self-closing-comp": [
+      "warn"
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "quotes": [
+      "warn",
+      "single"
+    ],
+    "comma-style": "error",
+    "comma-spacing": "error",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "key-spacing": [
+      "error",
+      {
+        "afterColon": true
+      }
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always",
+      {
+        "arraysInObjects": true
+      }
+    ],
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "info",
+          "warn",
+          "error",
+          "debug"
+        ]
+      }
+    ],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-explicit-any": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-empty-interface": "off"
+  }
+}
