@@ -1,6 +1,6 @@
 # Datawow Webboard
 
-โปรเจกต์ไว้สำหรับทำการ โพสเว็บบอร์ด
+โปรเจกต์สำหรับสร้างเว็บบอร์ด
 
 ## เทคโนโลยีที่ใช้
 
@@ -34,7 +34,7 @@
 
     ```bash
     cd backend
-    cp .env.rename .env
+    cp .env.rename .env # แก้ชื่อไฟล์ .env
     yarn install
     ```
 
@@ -42,7 +42,7 @@
 
     ```bash
     cd frontend
-    cp .env.rename .env
+    cp .env.rename .env # แก้ชื่อไฟล์ .env
     yarn install
     ```
 
@@ -56,6 +56,7 @@
     ```
 
     (คำอธิบายเพิ่มเติมเกี่ยวกับ Docker เช่น port ที่ใช้ หรือ volume ที่ mount)
+    ตัวอย่าง: Docker จะรัน Backend ที่พอร์ต 3001 และ Frontend ที่พอร์ต 3000 โดยฐานข้อมูล PostgreSQL จะอยู่ใน container ของตัวเอง
 
 4.  **Migrate ฐานข้อมูล (Prisma):**
 
@@ -65,32 +66,72 @@
     cd backend
     npx prisma migrate deploy
     ```
+    
 
-## การใช้งาน (ถ้ามี)
+5. **Seed ฐานข้อมูล (ใส่ข้อมูลตัวอย่าง):**
+    หลังจาก Migrate ฐานข้อมูลเสร็จแล้ว สามารถรันคำสั่งต่อไปนี้เพื่อใส่ข้อมูลตัวอย่างลงในฐานข้อมูล
+    ```bash
+    npx prisma db seed
+    ```
 
-  ### Environment Dev
+## การใช้งาน
 
-  1. **Run dev ของ Backend**
-  
-  ```bash
+### Environment Dev
+
+1.  **รัน dev ของ Backend:**
+
+    ```bash
     cd backend
     yarn start:dev
     ```
 
-(อธิบายวิธีการใช้งานโปรเจกต์ เช่น วิธีการรัน development server, API endpoints, หรืออื่นๆ)
+2.  **รัน dev ของ Frontend:**
 
-## ตัวแปรควบคุม (ถ้ามี)
+    ```bash
+    cd frontend
+    yarn dev
+    ```
+
+### การเชื่อมต่อ API
+
+Frontend เชื่อมต่อกับ Backend ผ่าน API ที่ `https://localhost:3001/api`
+
+### Swagger Documentation
+
+คุณสามารถดูเอกสาร API ได้ที่ `https://localhost:3001/swagger`
+
+## ตัวแปรควบคุม
 
 (อธิบายตัวแปร environment ที่ใช้ เช่น `.env` files, และความหมายของแต่ละตัวแปร)
 
-## ปัญหาที่พบบ่อย (ถ้ามี)
+ตัวอย่าง:
+
+*   `DATABASE_URL`: URL สำหรับเชื่อมต่อฐานข้อมูล PostgreSQL
+*   `JWT_SECRET`: Secret key สำหรับ JWT (สำคัญมาก ควรเก็บเป็นความลับ)
+
+## ปัญหาที่พบบ่อย
 
 (รวบรวมปัญหาที่อาจเกิดขึ้นและวิธีการแก้ไข)
+
+ตัวอย่าง:
+
+*   **ปัญหา:** `Error: connect ECONNREFUSED 127.0.0.1:5432` (ไม่สามารถเชื่อมต่อกับ PostgreSQL ได้)
+    *   **วิธีแก้ไข:** ตรวจสอบให้แน่ใจว่า Docker container ของ PostgreSQL รันอยู่ และ `DATABASE_URL` ใน `.env` ถูกต้อง
 
 ## การพัฒนา
 
 (อธิบายขั้นตอนการพัฒนาต่อ เช่น การสร้าง branch, การ commit, หรืออื่นๆ)
 
-## ลิขสิทธิ์ (ถ้ามี)
+## ลิขสิทธิ์
 
 (ระบุลิขสิทธิ์ของโปรเจกต์)
+
+## การปรับแต่งหน้าตา (Frontend)
+
+ในการปรับแต่งหน้าตาของเว็บบอร์ด (Frontend) คุณสามารถแก้ไขไฟล์ต่างๆ ภายในโฟลเดอร์ `frontend` ซึ่งใช้ Next.js โดยหลักการคือ:
+
+*   แก้ไข component ต่างๆ ในโฟลเดอร์ `components`
+*   แก้ไขหน้าต่างๆ ในโฟลเดอร์ `pages`
+*   ใช้ CSS Modules หรือ styled-components เพื่อจัดการ styles
+
+(ถ้ามี design system หรือ UI library ที่ใช้ สามารถระบุไว้ในส่วนนี้ได้)
