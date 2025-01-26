@@ -31,11 +31,12 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('posts')
 @ApiTags('posts')
-@UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
 @ApiBearerAuth() // เพิ่มตรงนี้
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  // สร้างเส้นทางสำหรับการสร้างโพสต์ใหม่
+  @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
   @Post()
   @HttpCode(HttpStatus.CREATED) // ใช้ HttpStatus enum เพื่อความชัดเจน
   @UsePipes(ValidationPipe)
@@ -63,6 +64,8 @@ export class PostsController {
     return this.postsService.create(createPostDto, req.user?.id)
   }
 
+
+  // สร้างเส้นทางสำหรับการดึงข้อมูลโพสต์ทั้งหมด
   @Get()
   @ApiOperation({
     summary: 'ดึงข้อมูลโพสต์ทั้งหมด',
@@ -84,6 +87,8 @@ export class PostsController {
     return this.postsService.findAll()
   }
 
+
+  // สร้างเส้นทางสำหรับการดึงข้อมูลโพสต์ด้วย ID
   @Get(':id')
   @ApiOperation({
     summary: 'ดึงข้อมูลโพสต์ด้วย ID',
@@ -106,6 +111,9 @@ export class PostsController {
     return this.postsService.findOne(+id)
   }
 
+
+  // สร้างเส้นทางสำหรับการแก้ไขข้อมูลโพสต์
+  @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
   @Patch(':id')
   @UsePipes(ValidationPipe)
   @ApiOperation({
@@ -133,6 +141,9 @@ export class PostsController {
     return this.postsService.update(+id, updatePostDto, req.user?.id)
   }
 
+
+  // สร้างเส้นทางสำหรับการลบข้อมูลโพสต์
+  @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
   @Delete(':id')
   @ApiOperation({
     summary: 'ลบโพสต์',

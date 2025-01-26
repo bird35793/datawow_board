@@ -31,11 +31,12 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('comments')
 @ApiTags('comments')
-@UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
 @ApiBearerAuth() // เพิ่มตรงนี้
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
+  // สร้างเส้นทางสำหรับการสร้าง Comment ใหม่
+  @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(ValidationPipe)
@@ -63,6 +64,8 @@ export class CommentsController {
     return this.commentsService.create(createCommentDto, req.user?.id)
   }
 
+
+  // สร้างเส้นทางสำหรับการดึงข้อมูล Comment ทั้งหมด
   @Get()
   @ApiOperation({
     summary: 'ดึงข้อมูล Comment ทั้งหมด',
@@ -84,6 +87,8 @@ export class CommentsController {
     return this.commentsService.findAll()
   }
 
+
+  // สร้างเส้นทางสำหรับการดึงข้อมูล Comment ด้วย ID
   @Get(':id')
   @ApiOperation({
     summary: 'ดึงข้อมูล Comment ด้วย ID',
@@ -106,6 +111,9 @@ export class CommentsController {
     return this.commentsService.findOne(+id)
   }
 
+
+  // สร้างเส้นทางสำหรับการแก้ไขข้อมูล Comment
+  @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
   @Patch(':id')
   @UsePipes(ValidationPipe)
   @ApiOperation({
@@ -137,6 +145,9 @@ export class CommentsController {
     return this.commentsService.update(+id, updateCommentDto, req.user?.id)
   }
 
+
+  // สร้างเส้นทางสำหรับการลบ Comment
+  @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
   @Delete(':id')
   @ApiOperation({
     summary: 'ลบ Comment',

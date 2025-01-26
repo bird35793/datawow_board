@@ -14,6 +14,7 @@ export interface CommentPostDto {
     updatedByUser?: CommentPostDto; // updatedByUser อาจเป็น optional
     isActive: boolean;
   }
+
   
   export interface ResponseSelectPostDto {
       id: number;
@@ -21,7 +22,9 @@ export interface CommentPostDto {
       content: string;
       createdAt: Date;
       updatedAt?: Date;
-      authorDisplayName: string;
+      author: CommentPostDto;
+      createdByUser: CommentPostDto;
+      updatedByUser: CommentPostDto;
       isActive: boolean;
   }
   

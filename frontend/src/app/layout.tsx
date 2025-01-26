@@ -1,6 +1,8 @@
 import { AuthProvider } from '@/hooks/useAuth';
 import './globals.scss';
 import type { Metadata } from 'next'
+import { QueryProvider } from '@/providers/QueryProvider';
+import Layout from '@/components/Layout';
 
 export const metadata: Metadata = {
   title: 'Datawow Webboard',
@@ -15,9 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider> {/* Wrap application */}
+        {/* <AuthProvider>
           {children}
-        </AuthProvider>
+        </AuthProvider> */}
+        <QueryProvider> {/* Wrap ด้วย QueryProvider */}
+          <Layout>{children}</Layout>
+        </QueryProvider>
+        {children}
       </body>
     </html>
   )

@@ -13,7 +13,8 @@
   "dependencies": {
     "next": "15.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-query": "^3.39.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -27,9 +28,9 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "postcss": "^8",
     "prettier": "^3.4.2",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5",
     "sass": "^1.83.4",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }

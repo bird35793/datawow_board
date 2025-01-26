@@ -1,11 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap');
 
-body {
-  font-family: 'Prompt', sans-serif;
-  background-color: #f8f9fa;
-  color: #212529;
+:root {
+  /* Default: Dark Mode */
+  --bg-color: #111827;
+  /* สีพื้นหลัง */
+  --text-color: #e5e7eb;
+  /* สีตัวอักษร */
+  --primary-color: #3b82f6;
+  /* สีหลัก */
+  --secondary-color: #6b7280;
+  /* สีรอง */
+  --accent-color: #facc15;
+  /* สีเน้น */
+  --border-color: #374151;
+  /* สีเส้นขอบ */
+  --card-bg: #1f2937;
+  /* สีพื้นหลังการ์ด */
 }
 
+.light-mode {
+  --bg-color: #f9fafb;
+  --text-color: #1f2937;
+  --primary-color: #3b82f6;
+  --secondary-color: #6b7280;
+  --accent-color: #facc15;
+  --border-color: #d1d5db;
+  --card-bg: #ffffff;
+}
+
+body {
+  font-family: 'Prompt', sans-serif;
+  background-color: var(--bg-color);
+  /* ใช้ CSS Variable */
+  color: var(--text-color);
+  /* ใช้ CSS Variable */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  /* เพิ่ม transition เพื่อความ smooth */
+}
+
+/* Styles อื่นๆ ที่ใช้ CSS Variables เช่น */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+}
 
 /* @tailwind base;
 @tailwind components;
