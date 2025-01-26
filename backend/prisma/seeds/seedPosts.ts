@@ -6,11 +6,13 @@ export async function seedPosts(users: { id: number }[], prisma: PrismaClient) {
       title: 'คำถามแรก',
       content: 'เนื้อหาของคำถามแรก',
       authorId: users[0].id,
+      createdBy: users[0].id,
     },
     {
       title: 'คำถามที่สอง',
       content: 'เนื้อหาของคำถามที่สอง',
       authorId: users[1].id,
+      createdBy: users[1].id,
     },
   ];
 

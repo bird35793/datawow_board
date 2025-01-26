@@ -8,7 +8,7 @@ import {
 } from 'class-validator'
 // src/users/dto/create-user.dto.ts
 
-export class RequestCreateUserDto {
+export class RequestCreateAuthDto {
   @ApiProperty({ description: 'ชื่อผู้ใช้' }) // Swagger Doc
   @IsNotEmpty({ message: 'กรุณากรอก Username' })
   @IsString({ message: 'Username ต้องเป็นข้อความ' })

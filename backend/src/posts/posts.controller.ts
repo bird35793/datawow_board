@@ -9,7 +9,9 @@ import {
   UsePipes,
   ValidationPipe,
   HttpCode, // Import HttpCode
-  HttpStatus, // Import HttpStatus
+  HttpStatus,
+  UseGuards, // Import HttpStatus
+  Request,
 } from '@nestjs/common'
 import { PostsService } from './posts.service'
 import { RequestCreatePostDto } from './dto/request-create-post.dto'
@@ -20,13 +22,17 @@ import {
   ApiTags,
   ApiOperation,
   ApiResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger'
 import { ResponseCreatePostDto } from './dto/response-create-post.dto'
 import { ResponseSelectPostDto } from './dto/response-select-post.dto'
 import { ResponseUpdatePostDto } from './dto/response-update-post.dto'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('posts')
 @ApiTags('posts')
+@UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
+@ApiBearerAuth() // เพิ่มตรงนี้
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
@@ -53,8 +59,8 @@ export class PostsController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
   })
-  create(@Body() createPostDto: RequestCreatePostDto) {
-    return this.postsService.create(createPostDto)
+  create(@Body() createPostDto: RequestCreatePostDto, @Request() req) {
+    return this.postsService.create(createPostDto, req.user?.id)
   }
 
   @Get()
@@ -123,8 +129,8 @@ export class PostsController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
   })
-  update(@Param('id') id: string, @Body() updatePostDto: RequestUpdatePostDto) {
-    return this.postsService.update(+id, updatePostDto)
+  update(@Param('id') id: string, @Body() updatePostDto: RequestUpdatePostDto, @Request() req) {
+    return this.postsService.update(+id, updatePostDto, req.user?.id)
   }
 
   @Delete(':id')

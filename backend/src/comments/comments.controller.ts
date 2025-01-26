@@ -10,6 +10,8 @@ import {
   ValidationPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
+  Request,
 } from '@nestjs/common'
 import { CommentsService } from './comments.service'
 import { RequestCreateCommentDto } from './dto/request-create-comment.dto'
@@ -20,13 +22,17 @@ import {
   ApiTags,
   ApiOperation,
   ApiResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger'
 import { ResponseCreateCommentDto } from './dto/response-create-comment.dto'
 import { ResponseSelectCommentDto } from './dto/response-select-comment.dto'
 import { ResponseUpdateCommentDto } from './dto/response-update-comment.dto'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('comments')
 @ApiTags('comments')
+@UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
+@ApiBearerAuth() // เพิ่มตรงนี้
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
@@ -53,8 +59,8 @@ export class CommentsController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
   })
-  create(@Body() createCommentDto: RequestCreateCommentDto) {
-    return this.commentsService.create(createCommentDto)
+  create(@Body() createCommentDto: RequestCreateCommentDto, @Request() req) {
+    return this.commentsService.create(createCommentDto, req.user?.id)
   }
 
   @Get()
@@ -123,8 +129,12 @@ export class CommentsController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
   })
-  update(@Param('id') id: string, @Body() updateCommentDto: RequestUpdateCommentDto) {
-    return this.commentsService.update(+id, updateCommentDto)
+  update(
+    @Param('id') id: string,
+    @Body() updateCommentDto: RequestUpdateCommentDto, 
+    @Request() req
+  ) {
+    return this.commentsService.update(+id, updateCommentDto, req.user?.id)
   }
 
   @Delete(':id')

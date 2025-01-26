@@ -1,20 +1,23 @@
+import * as bcrypt from 'bcrypt'
+import * as dotenv from 'dotenv'
+import { plainToInstance } from 'class-transformer'
+import { PrismaService } from 'src/prisma/prisma.service'
 import { RequestCreateUserDto } from './dto/request-create-user.dto'
+import { RequestUpdateUserDto } from './dto/request-update-user.dto'
+import { ResponseCreateUserDto } from './dto/response-create-user.dto'
+import { ResponseSelectUserDto } from './dto/response-select-user.dto'
 import {
   BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
-import { plainToInstance } from 'class-transformer'
-import { PrismaService } from 'src/prisma/prisma.service'
-import { RequestUpdateUserDto } from './dto/request-update-user.dto'
-import { ResponseCreateUserDto } from './dto/response-create-user.dto'
-import { ResponseSelectUserDto } from './dto/response-select-user.dto'
 
+dotenv.config()
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async create(requestCreateUserDto: RequestCreateUserDto) {
+  async create(requestCreateUserDto: RequestCreateUserDto, userId: number) {
     try {
       // 1. ตรวจสอบ username หรือ email ที่ซ้ำกัน
       const existingUser = await this.prisma.user.findFirst({
@@ -48,9 +51,18 @@ export class UsersService {
         })
       }
 
+      const saltRounds = parseInt(process.env.SALT_ROUNDS || '10', 10)
+
       // 2. สร้าง user (ไม่ต้อง include relations)
       const createdUser = await this.prisma.user.create({
-        data: requestCreateUserDto,
+        data: {
+          ...requestCreateUserDto,
+          password: await bcrypt.hash(
+            requestCreateUserDto.password,
+            saltRounds
+          ),
+          createdBy: userId,
+        },
       })
 
       // 3. ดึง user พร้อม createdByDisplayName หลังจาก create
@@ -125,16 +137,83 @@ export class UsersService {
     }
   }
 
-  async update(id: number, requestUpdateUserDto: RequestUpdateUserDto) {
+  async update(
+    id: number,
+    requestUpdateUserDto: RequestUpdateUserDto,
+    userId: number
+  ) {
+    let duplicateField = ''
+    let message = ''
     try {
-      const updatedUser = await this.prisma.user.update({
-        where: { id },
-        data: requestUpdateUserDto,
+      const existingUser = await this.prisma.user.findUnique({ where: { id } })
+      if (!existingUser) {
+        console.log('test1')
+        throw new NotFoundException('ไม่พบผู้ใช้')
+      }
+
+      // ตรวจสอบ username และ email ที่ซ้ำกัน โดยยกเว้น id ของตัวเอง
+      const conflictingUser = await this.prisma.user.findFirst({
+        where: {
+          AND: [
+            // ใช้ AND เพื่อรวมเงื่อนไข
+            {
+              OR: [
+                { username: requestUpdateUserDto.username },
+                { email: requestUpdateUserDto.email },
+              ],
+            },
+            {
+              NOT: { id }, // ยกเว้น id ของตัวเอง
+            },
+          ],
+        },
       })
 
-      return plainToInstance(ResponseCreateUserDto, updatedUser)
+      if (conflictingUser) {
+        // ตรวจสอบว่าซ้ำที่ title หรือ content
+        duplicateField =
+          existingUser.username === requestUpdateUserDto.username
+            ? 'username'
+            : 'email'
+        message =
+          duplicateField === 'username'
+            ? 'Username นี้มีอยู่แล้ว กรุณาใช้ Username อื่น'
+            : 'Email นี้มีอยู่แล้ว กรุณาใช้ Email อื่น'
+
+        throw new BadRequestException({
+          errors: [
+            {
+              field: duplicateField,
+              message: message,
+            },
+          ],
+        })
+      }
+
+      const updatedUser = await this.prisma.user.update({
+        where: { id },
+        data: {
+          ...requestUpdateUserDto,
+          updatedBy: userId,
+          updatedAt: new Date(), // หรือใช้ @updatedAt ใน schema
+        },
+      })
+
+      return plainToInstance(RequestUpdateUserDto, updatedUser)
     } catch (error) {
-      throw new NotFoundException('ไม่พบผู้ใช้')
+      // ... (จัดการ error)
+      if (message != '') {
+        throw new BadRequestException({
+          errors: [
+            {
+              field: duplicateField,
+              message: message,
+            },
+          ],
+        })
+      } else {
+        throw new NotFoundException('ไม่พบผู้ใช้')
+      }
     }
   }
 

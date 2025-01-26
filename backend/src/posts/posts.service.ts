@@ -1,6 +1,7 @@
 // src/posts/posts.service.ts
 import {
   BadRequestException,
+  ConflictException,
   HttpException,
   HttpStatus,
   Injectable,
@@ -18,7 +19,7 @@ import { ResponseUpdatePostDto } from './dto/response-update-post.dto'
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createPostDto: RequestCreatePostDto) {
+  async create(createPostDto: RequestCreatePostDto, userId: number) {
     try {
       const existingPost = await this.prisma.post.findFirst({
         where: {
@@ -38,7 +39,11 @@ export class PostsService {
       }
 
       const createdPost = await this.prisma.post.create({
-        data: createPostDto,
+        data: {
+          ...createPostDto,
+          authorId: userId,
+          createdBy: userId,
+        },
         include: {
           author: { select: { displayName: true } },
           createdByUser: { select: { displayName: true } },
@@ -47,22 +52,8 @@ export class PostsService {
 
       return plainToInstance(ResponseCreatePostDto, createdPost)
     } catch (error) {
-      if (error.code === 'P2002') {
-        // จัดการกรณีชื่อเรื่องที่ซ้ำกัน
-        // Option 1: สร้างชื่อเรื่องที่ไม่ซ้ำกันโดยอัตโนมัติ (ถ้าสามารถทำได้)
-        createPostDto.title = createPostDto.title + '-duplicate'
-        // ลองสร้างโพสต์อีกครั้งด้วยชื่อเรื่องที่ปรับเปลี่ยน
-        return await this.create(createPostDto) // เรียกซ้ำแบบ recursion
-
-        // Option 2: ส่งกลับข้อผิดพลาดแบบ custom ไปยัง client
-        throw new HttpException(
-          'พบชื่อเรื่องที่ซ้ำกัน กรุณาเลือกชื่อเรื่องที่ไม่ซ้ำกัน',
-          HttpStatus.BAD_REQUEST
-        )
-      } else {
-        // ส่งต่อข้อผิดพลาดอื่น
-        throw error
-      }
+      console.error('Error creating post:', error)
+      throw error
     }
   }
 
@@ -76,9 +67,7 @@ export class PostsService {
         },
       })
 
-      return posts.map((post) =>
-        plainToInstance(ResponseSelectPostDto, post)
-      )
+      return posts.map((post) => plainToInstance(ResponseSelectPostDto, post))
     } catch (error) {
       console.error('Error finding posts:', error)
       throw error
@@ -105,20 +94,67 @@ export class PostsService {
     }
   }
 
-  async update(id: number, updatePostDto: RequestUpdatePostDto) {
+  async update(id: number, updatePostDto: RequestUpdatePostDto, userId: number) {
+    let duplicateField = '';
+    let message = '';
     try {
+      const existingPost = await this.prisma.post.findUnique({ where: { id } });
+      if (!existingPost) {
+        throw new NotFoundException('ไม่พบโพสต์');
+      }
+
+      // ตรวจสอบ title ที่ซ้ำกัน โดยยกเว้น id ของตัวเอง
+      const conflictingPost = await this.prisma.post.findFirst({
+        where: {
+          AND: [
+            { title: updatePostDto.title }, // ตรวจสอบ title
+            { NOT: { id } }, // ยกเว้น id ของตัวเอง
+          ],
+        },
+      });
+
+      if (conflictingPost) {
+        duplicateField = 'title';
+        message = 'Title นี้มีอยู่แล้ว กรุณาใช้ Title อื่น';
+
+        throw new BadRequestException({
+          errors: [
+            {
+              field: duplicateField,
+              message: message,
+            },
+          ],
+        });
+      }
+
       const updatedPost = await this.prisma.post.update({
         where: { id },
-        data: updatePostDto,
-        include: { updatedByUser: { select: { displayName: true } } },
-      })
-      if (!updatedPost) {
-        throw new NotFoundException('ไม่พบโพสต์')
-      }
-      return plainToInstance(ResponseUpdatePostDto, updatedPost )
+        data: {
+          ...updatePostDto,
+          updatedBy: userId,
+          updatedAt: new Date(), // หรือใช้ @updatedAt ใน schema
+        },
+        include: { updatedByUser: { select: { displayName: true } } }, // คง include ไว้
+      });
+
+      return plainToInstance(ResponseUpdatePostDto, updatedPost);
     } catch (error) {
-      console.error('Error updating post:', error)
-      throw error
+      if (message != '') {
+        throw new BadRequestException({
+          errors: [
+            {
+              field: duplicateField,
+              message: message,
+            },
+          ],
+        });
+      } else if (error.code === 'P2025') {
+        throw new NotFoundException('ไม่พบโพสต์');
+      } else if (error.code === 'P2002') {
+        throw new ConflictException('Title นี้มีอยู่แล้ว'); // จัดการ P2002 ใน catch block ด้วย
+      }
+      console.error('Error updating post:', error); // Log error เพื่อ debug
+      throw error; // Re-throw error เพื่อให้ NestJS จัดการต่อ
     }
   }
 

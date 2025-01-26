@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Exclude, Expose } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger'
+import { Exclude, Expose } from 'class-transformer'
 
 export class UserDto {
   // DTO สำหรับข้อมูลผู้ใช้
@@ -10,23 +10,26 @@ export class UserDto {
 export class ResponseUserDto {
   @Expose()
   @ApiProperty({ description: 'ID ของผู้ใช้', type: Number })
-  id: number;
+  id: number
 
   @Expose()
   @ApiProperty({ description: 'ชื่อผู้ใช้', type: String })
-  username: string;
+  username: string
 
   @Expose()
   @ApiProperty({ description: 'อีเมลของผู้ใช้', type: String })
-  email: string;
+  email: string
 
   @Expose()
-  @ApiProperty({ description: 'สถานะการใช้งานของผู้ใช้ (เปิด/ปิด)', type: Boolean })
-  isActive: boolean;
+  @ApiProperty({
+    description: 'สถานะการใช้งานของผู้ใช้ (เปิด/ปิด)',
+    type: Boolean,
+  })
+  isActive: boolean
 
   @Exclude()
-  createdBy: number;
+  createdBy: number
 
   @Exclude()
-  updatedBy: number;
+  updatedBy: number
 }
