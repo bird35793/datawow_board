@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.scss'
-import Layout from '@/components/Layout'
 
 export const metadata: Metadata = {
   title: 'Datawow Webboard',
@@ -15,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      {children}
+        {children}
       </body>
     </html>
   )
