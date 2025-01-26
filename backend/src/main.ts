@@ -37,20 +37,38 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api') // ตั้งค่า prefix /api
 
+  // Config Swagger
   const config = new DocumentBuilder()
     .setTitle('Datawow - Webboard')
     .setDescription('API documentation for my NestJS application')
     .setVersion('1.0')
+    .addTag('auth')
     .addTag('users')
     .addTag('posts')
     .addTag('comments')
+    .addBearerAuth() // เพิ่มตรงนี้สำหรับ global
     .build()
+
+  const options = {
+    swaggerOptions: {
+      authAction: {
+        defaultBearerAuth: {
+          type: 'apiKey', // Change to 'apiKey' for Swagger compatibility
+          in: 'header',
+          name: 'Authorization', // Standard header name for Bearer authorization
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+  }
+
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('swagger', app, document) // Swagger จะอยู่ที่ /swagger
+  SwaggerModule.setup('swagger', app, document, options) // ตั้งค่า path ของ swagger เป็น /api
 
   const port = process.env.PORT || 3001
   await app.listen(port)
-  console.log(`Application is running on: https://localhost:${port}`) // แสดง https ใน console
+  console.log(`Application is running on: https://localhost:${port}`) // Show https in console
 }
 
 bootstrap()
