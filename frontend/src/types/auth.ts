@@ -22,12 +22,12 @@ export interface ResponseLoginAuthDto {
 
 // ตัวอย่าง RegisterResponse type (ปรับตาม response จริงจาก backend)
 export interface RegisterResponse {
-  id: number;
-  username: string;
-  email: string;
-  isActive: boolean;
-  createdAt: Date;
-  createdByUser: UserDisplayName;
+  id: number
+  username: string
+  email: string
+  isActive: boolean
+  createdAt: Date
+  createdByUser: UserDisplayName
 }
 
 export interface AuthTokens {

@@ -1,10 +1,9 @@
-import type { Metadata } from "next"
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Dekend - เว็บหาที่ฝึกงาน หางาน สำหรับนักศึกษา",
-  description: "เว็บไซต์สำหรับค้นหางาน ฝึกงาน สำหรับนักศึกษาและบัณฑิตจบใหม่",
+  title: 'Dekend - เว็บหาที่ฝึกงาน หางาน สำหรับนักศึกษา',
+  description: 'เว็บไซต์สำหรับค้นหางาน ฝึกงาน สำหรับนักศึกษาและบัณฑิตจบใหม่',
 }
-
 
 export default function AuthLayout({
   children,

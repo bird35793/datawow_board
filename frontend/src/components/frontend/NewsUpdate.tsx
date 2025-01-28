@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from 'next/image'
+import Link from 'next/link'
 
 interface NewsItem {
-  title: string;
-  image: string;
-  link: string;
-  isNew?: boolean;
+  title: string
+  image: string
+  link: string
+  isNew?: boolean
 }
 
 const newsItems: NewsItem[] = [
@@ -13,13 +13,13 @@ const newsItems: NewsItem[] = [
     title: 'อัพเดทระบบประจำ เดือน สิงหาคม 2567',
     image: '/images/news/news1.webp',
     link: '#',
-    isNew: true
+    isNew: true,
   },
   {
     title: 'Dekend ครบรอบก่อนตั้ง Yamaha Thailand 2025',
     image: '/images/news/news2.webp',
     link: '#',
-    isNew: true
+    isNew: true,
   },
   {
     title: 'ภาษีเรื่องสำคัญที่นักศึกษาก็ควรเรียนรู้ไว้"',
@@ -30,22 +30,26 @@ const newsItems: NewsItem[] = [
     title: '6 สิ่งที่นักศึกษาควรมีติดตัวไว้ หลังจากฝึกงาน"',
     image: '/images/news/news4.jpg',
     link: '#',
-  }
-];
+  },
+]
 
 const NewsUpdate = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">ข่าวสารอัพเดทล่าสุด</h2>
-          <p className="text-gray-600">ข่าวสารการอัพเดทระบบใหม่ และข้อมูลการประชาสัมพันธ์ล่าสุด</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            ข่าวสารอัพเดทล่าสุด
+          </h2>
+          <p className="text-gray-600">
+            ข่าวสารการอัพเดทระบบใหม่ และข้อมูลการประชาสัมพันธ์ล่าสุด
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {newsItems.map((item, index) => (
-            <Link 
-              href={item.link} 
+            <Link
+              href={item.link}
               key={index}
               className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
@@ -74,7 +78,7 @@ const NewsUpdate = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default NewsUpdate; 
+export default NewsUpdate

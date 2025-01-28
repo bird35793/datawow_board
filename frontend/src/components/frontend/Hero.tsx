@@ -1,20 +1,36 @@
 'use client'
 
-import Link from 'next/link';
-import { useState } from 'react';
+import Link from 'next/link'
+import { useState } from 'react'
 import Image from 'next/image'
 // Mock data สำหรับกระทู้ (post) - ชั่วคราว
 const mockPosts = [
   { title: 'กระทู้ 1: หาที่ฝึกงานโปรแกรมเมอร์', author: 'สมชาย', id: 1 },
-  { title: 'กระทู้ 2: แชร์ประสบการณ์ฝึกงานที่บริษัท XYZ', author: 'สมหญิง', id: 2 },
-  { title: 'กระทู้ 3: ถามเรื่องการเตรียมตัวสัมภาษณ์งาน', author: 'น้องใหม่', id: 3 },
-  { title: 'กระทู้ 4: แนะนำหนังสืออ่านสำหรับนักพัฒนา', author: 'พี่ใหญ่', id: 4 },
-  { title: 'กระทู้ 5: หาเพื่อนร่วมงานตำแหน่ง Front-end', author: 'คนเก่ง', id: 5 },
-];
+  {
+    title: 'กระทู้ 2: แชร์ประสบการณ์ฝึกงานที่บริษัท XYZ',
+    author: 'สมหญิง',
+    id: 2,
+  },
+  {
+    title: 'กระทู้ 3: ถามเรื่องการเตรียมตัวสัมภาษณ์งาน',
+    author: 'น้องใหม่',
+    id: 3,
+  },
+  {
+    title: 'กระทู้ 4: แนะนำหนังสืออ่านสำหรับนักพัฒนา',
+    author: 'พี่ใหญ่',
+    id: 4,
+  },
+  {
+    title: 'กระทู้ 5: หาเพื่อนร่วมงานตำแหน่ง Front-end',
+    author: 'คนเก่ง',
+    id: 5,
+  },
+]
 
 const Hero = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [posts, setPosts] = useState(mockPosts); // ใช้ state สำหรับข้อมูลกระทู้ (เผื่ออนาคตดึงจาก API)
+  const [posts, setPosts] = useState(mockPosts) // ใช้ state สำหรับข้อมูลกระทู้ (เผื่ออนาคตดึงจาก API)
 
   // ในอนาคต เราจะใช้ useEffect ดึงข้อมูลจาก API
   // useEffect(() => {
@@ -27,7 +43,6 @@ const Hero = () => {
     <div className="relative bg-white pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
           {/* Left Side - Images */}
           <div className="relative">
             <div className="relative w-full aspect-square max-w-[400px] lg:max-w-[600px] mx-auto">
@@ -125,8 +140,16 @@ const Hero = () => {
             {/* แสดงกระทู้ */}
             <ul className="mb-8">
               {posts.map((post) => (
-                <li key={post.id} className="mb-4 border-b border-gray-200 pb-2">
-                  <Link href={`/webboard/${post.id}`} className="text-lg font-medium text-gray-900 hover:text-blue-500"> {/* ลิงก์ไปหน้ากระทู้ */}
+                <li
+                  key={post.id}
+                  className="mb-4 border-b border-gray-200 pb-2"
+                >
+                  <Link
+                    href={`/webboard/${post.id}`}
+                    className="text-lg font-medium text-gray-900 hover:text-blue-500"
+                  >
+                    {' '}
+                    {/* ลิงก์ไปหน้ากระทู้ */}
                     {post.title}
                   </Link>
                   <p className="text-sm text-gray-500">โดย {post.author}</p>
@@ -144,7 +167,7 @@ const Hero = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Hero

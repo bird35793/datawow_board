@@ -1,30 +1,101 @@
-"use client"
+'use client'
 
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
 
 export function ProfileForm() {
-  const [gender, setGender] = useState<"male" | "female">("male")
-  const [englishLevel, setEnglishLevel] = useState<"poor" | "fair" | "good" | "excellent">("fair")
+  const [gender, setGender] = useState<'male' | 'female'>('male')
+  const [englishLevel, setEnglishLevel] = useState<
+    'poor' | 'fair' | 'good' | 'excellent'
+  >('fair')
   const [selectedProvinces, setSelectedProvinces] = useState<string[]>([])
 
   const provinces = [
-    "กรุงเทพมหานคร", "กระบี่", "กาญจนบุรี", "กาฬสินธุ์", "กำแพงเพชร", "ขอนแก่น", "จันทบุรี", "ฉะเชิงเทรา", 
-    "ชลบุรี", "ชัยนาท", "ชัยภูมิ", "ชุมพร", "เชียงราย", "เชียงใหม่", "ตรัง", "ตราด", "ตาก", "นครนายก",
-    "นครปฐม", "นครพนม", "นครราชสีมา", "นครศรีธรรมราช", "นครสวรรค์", "นนทบุรี", "นราธิวาส", "น่าน", 
-    "บึงกาฬ", "บุรีรัมย์", "ปทุมธานี", "ประจวบคีรีขันธ์", "ปราจีนบุรี", "ปัตตานี", "พระนครศรีอยุธยา", 
-    "พังงา", "พัทลุง", "พิจิตร", "พิษณุโลก", "เพชรบุรี", "เพชรบูรณ์", "แพร่", "พะเยา", "ภูเก็ต", 
-    "มหาสารคาม", "มุกดาหาร", "แม่ฮ่องสอน", "ยะลา", "ยโสธร", "ร้อยเอ็ด", "ระนอง", "ระยอง", "ราชบุรี",
-    "ลพบุรี", "ลำปาง", "ลำพูน", "เลย", "ศรีสะเกษ", "สกลนคร", "สงขลา", "สตูล", "สมุทรปราการ", 
-    "สมุทรสงคราม", "สมุทรสาคร", "สระแก้ว", "สระบุรี", "สิงห์บุรี", "สุโขทัย", "สุพรรณบุรี", "สุราษฎร์ธานี",
-    "สุรินทร์", "หนองคาย", "หนองบัวลำภู", "อ่างทอง", "อุดรธานี", "อุทัยธานี", "อุตรดิตถ์", "อุบลราชธานี",
-    "อำนาจเจริญ"
+    'กรุงเทพมหานคร',
+    'กระบี่',
+    'กาญจนบุรี',
+    'กาฬสินธุ์',
+    'กำแพงเพชร',
+    'ขอนแก่น',
+    'จันทบุรี',
+    'ฉะเชิงเทรา',
+    'ชลบุรี',
+    'ชัยนาท',
+    'ชัยภูมิ',
+    'ชุมพร',
+    'เชียงราย',
+    'เชียงใหม่',
+    'ตรัง',
+    'ตราด',
+    'ตาก',
+    'นครนายก',
+    'นครปฐม',
+    'นครพนม',
+    'นครราชสีมา',
+    'นครศรีธรรมราช',
+    'นครสวรรค์',
+    'นนทบุรี',
+    'นราธิวาส',
+    'น่าน',
+    'บึงกาฬ',
+    'บุรีรัมย์',
+    'ปทุมธานี',
+    'ประจวบคีรีขันธ์',
+    'ปราจีนบุรี',
+    'ปัตตานี',
+    'พระนครศรีอยุธยา',
+    'พังงา',
+    'พัทลุง',
+    'พิจิตร',
+    'พิษณุโลก',
+    'เพชรบุรี',
+    'เพชรบูรณ์',
+    'แพร่',
+    'พะเยา',
+    'ภูเก็ต',
+    'มหาสารคาม',
+    'มุกดาหาร',
+    'แม่ฮ่องสอน',
+    'ยะลา',
+    'ยโสธร',
+    'ร้อยเอ็ด',
+    'ระนอง',
+    'ระยอง',
+    'ราชบุรี',
+    'ลพบุรี',
+    'ลำปาง',
+    'ลำพูน',
+    'เลย',
+    'ศรีสะเกษ',
+    'สกลนคร',
+    'สงขลา',
+    'สตูล',
+    'สมุทรปราการ',
+    'สมุทรสงคราม',
+    'สมุทรสาคร',
+    'สระแก้ว',
+    'สระบุรี',
+    'สิงห์บุรี',
+    'สุโขทัย',
+    'สุพรรณบุรี',
+    'สุราษฎร์ธานี',
+    'สุรินทร์',
+    'หนองคาย',
+    'หนองบัวลำภู',
+    'อ่างทอง',
+    'อุดรธานี',
+    'อุทัยธานี',
+    'อุตรดิตถ์',
+    'อุบลราชธานี',
+    'อำนาจเจริญ',
   ]
 
   return (
     <form className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900">โปรดกรอกข้อมูลเรซูเม่ของคุณ</h2>
+      <h2 className="text-xl font-semibold text-gray-900">
+        โปรดกรอกข้อมูลเรซูเม่ของคุณ
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* ชื่อจริง */}
@@ -54,8 +125,8 @@ export function ProfileForm() {
                 type="radio"
                 name="gender"
                 value="male"
-                checked={gender === "male"}
-                onChange={() => setGender("male")}
+                checked={gender === 'male'}
+                onChange={() => setGender('male')}
                 className="w-4 h-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
               />
               <span className="ml-2 text-gray-700">ชาย</span>
@@ -65,8 +136,8 @@ export function ProfileForm() {
                 type="radio"
                 name="gender"
                 value="female"
-                checked={gender === "female"}
-                onChange={() => setGender("female")}
+                checked={gender === 'female'}
+                onChange={() => setGender('female')}
                 className="w-4 h-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
               />
               <span className="ml-2 text-gray-700">หญิง</span>
@@ -93,7 +164,20 @@ export function ProfileForm() {
               เดือน
             </label>
             <select className="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-gray-900">
-              {["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."].map((month) => (
+              {[
+                'ม.ค.',
+                'ก.พ.',
+                'มี.ค.',
+                'เม.ย.',
+                'พ.ค.',
+                'มิ.ย.',
+                'ก.ค.',
+                'ส.ค.',
+                'ก.ย.',
+                'ต.ค.',
+                'พ.ย.',
+                'ธ.ค.',
+              ].map((month) => (
                 <option key={month} value={month}>
                   {month}
                 </option>
@@ -162,10 +246,10 @@ export function ProfileForm() {
         </label>
         <div className="flex gap-4">
           {[
-            { value: "poor", label: "พอใช้" },
-            { value: "fair", label: "ปานกลาง" },
-            { value: "good", label: "ดี" },
-            { value: "excellent", label: "ยอดเยี่ยม" },
+            { value: 'poor', label: 'พอใช้' },
+            { value: 'fair', label: 'ปานกลาง' },
+            { value: 'good', label: 'ดี' },
+            { value: 'excellent', label: 'ยอดเยี่ยม' },
           ].map((level) => (
             <label key={level.value} className="flex items-center">
               <input
@@ -173,7 +257,9 @@ export function ProfileForm() {
                 name="englishLevel"
                 value={level.value}
                 checked={englishLevel === level.value}
-                onChange={() => setEnglishLevel(level.value as typeof englishLevel)}
+                onChange={() =>
+                  setEnglishLevel(level.value as typeof englishLevel)
+                }
                 className="w-4 h-4 text-emerald-500 border-gray-300 focus:ring-emerald-500"
               />
               <span className="ml-2 text-gray-700">{level.label}</span>
@@ -183,8 +269,10 @@ export function ProfileForm() {
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-lg font-medium text-gray-900">ข้อมูลติดต่อ & ช่องทางติดตามผลงาน</h3>
-        
+        <h3 className="text-lg font-medium text-gray-900">
+          ข้อมูลติดต่อ & ช่องทางติดตามผลงาน
+        </h3>
+
         {/* เบอร์โทรศัพท์ */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -204,7 +292,7 @@ export function ProfileForm() {
 
       <div className="space-y-4">
         <h3 className="text-lg font-medium text-gray-900">ข้อมูลที่อยู่</h3>
-        
+
         {/* รหัสไปรษณีย์ */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -242,7 +330,7 @@ export function ProfileForm() {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             ที่อยู่
           </label>
-          <textarea 
+          <textarea
             rows={3}
             className="w-full rounded-lg p-3 bg-white border text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
             placeholder="เลขที่ บ้าน ถนน ซอย"
@@ -252,7 +340,7 @@ export function ProfileForm() {
 
       <div className="space-y-4">
         <h3 className="text-lg font-medium text-gray-900">ความต้องการ</h3>
-        
+
         <div className="flex gap-4">
           <label className="flex items-center">
             <input
@@ -287,7 +375,7 @@ export function ProfileForm() {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             จังหวัดที่สนใจ (เลือกได้สูงสุด 3 จังหวัด)
           </label>
-          <select 
+          <select
             className="w-full rounded-lg p-3 bg-white border text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
             value=""
             onChange={(e) => {
@@ -298,7 +386,7 @@ export function ProfileForm() {
           >
             <option value="">เลือกจังหวัด</option>
             {provinces
-              .filter(p => !selectedProvinces.includes(p))
+              .filter((p) => !selectedProvinces.includes(p))
               .map((province) => (
                 <option key={province} value={province}>
                   {province}
@@ -309,18 +397,33 @@ export function ProfileForm() {
           {/* แสดงจังหวัดที่เลือก */}
           <div className="mt-2 flex flex-wrap gap-2">
             {selectedProvinces.map((province) => (
-              <div 
+              <div
                 key={province}
                 className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600"
               >
                 {province}
                 <button
                   type="button"
-                  onClick={() => setSelectedProvinces(selectedProvinces.filter(p => p !== province))}
+                  onClick={() =>
+                    setSelectedProvinces(
+                      selectedProvinces.filter((p) => p !== province)
+                    )
+                  }
                   className="text-gray-400 hover:text-gray-600"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
@@ -331,8 +434,10 @@ export function ProfileForm() {
 
       <div className="flex justify-end gap-4">
         <Button type="submit">บันทึก</Button>
-        <Button variant="outline" type="button">ล้างข้อมูล</Button>
+        <Button variant="outline" type="button">
+          ล้างข้อมูล
+        </Button>
       </div>
     </form>
   )
-} 
+}

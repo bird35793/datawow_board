@@ -1,4 +1,4 @@
-import { ProfileForm } from "@/components/user/profile-form/ProfileForm"
+import { ProfileForm } from '@/components/user/profile-form/ProfileForm'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -14,4 +14,4 @@ export default function ProfilePage() {
       </div>
     </div>
   )
-} 
+}

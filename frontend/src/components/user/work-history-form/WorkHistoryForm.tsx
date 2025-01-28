@@ -1,19 +1,31 @@
-"use client"
+'use client'
 
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 export function WorkHistoryForm() {
   const months = [
-    "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-    "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    'มกราคม',
+    'กุมภาพันธ์',
+    'มีนาคม',
+    'เมษายน',
+    'พฤษภาคม',
+    'มิถุนายน',
+    'กรกฎาคม',
+    'สิงหาคม',
+    'กันยายน',
+    'ตุลาคม',
+    'พฤศจิกายน',
+    'ธันวาคม',
   ]
 
   const years = Array.from({ length: 10 }, (_, i) => 2567 - i)
 
   return (
     <form className="space-y-6">
-      <h2 className="text-xl font-semibold text-gray-900">เพิ่มประวัติการทำงาน</h2>
+      <h2 className="text-xl font-semibold text-gray-900">
+        เพิ่มประวัติการทำงาน
+      </h2>
 
       <div className="space-y-4">
         {/* ชื่อตำแหน่ง */}
@@ -29,7 +41,7 @@ export function WorkHistoryForm() {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             รายละเอียดงานที่เคยทำ
           </label>
-          <textarea 
+          <textarea
             rows={4}
             className="w-full rounded-lg p-3 bg-white border text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
             placeholder="เช่น พัฒนาเว็บไซต์ด้วย HTML, CSS และ Javascript"
@@ -80,17 +92,23 @@ export function WorkHistoryForm() {
           <div className="grid grid-cols-3 gap-4">
             <select className="w-full rounded-lg p-3 bg-white border text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
               {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-                <option key={day} value={day}>{day}</option>
+                <option key={day} value={day}>
+                  {day}
+                </option>
               ))}
             </select>
             <select className="w-full rounded-lg p-3 bg-white border text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
               {months.map((month) => (
-                <option key={month} value={month}>{month}</option>
+                <option key={month} value={month}>
+                  {month}
+                </option>
               ))}
             </select>
             <select className="w-full rounded-lg p-3 bg-white border text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
               {years.map((year) => (
-                <option key={year} value={year}>{year}</option>
+                <option key={year} value={year}>
+                  {year}
+                </option>
               ))}
             </select>
           </div>
@@ -104,17 +122,23 @@ export function WorkHistoryForm() {
           <div className="grid grid-cols-3 gap-4">
             <select className="w-full rounded-lg p-3 bg-white border text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
               {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-                <option key={day} value={day}>{day}</option>
+                <option key={day} value={day}>
+                  {day}
+                </option>
               ))}
             </select>
             <select className="w-full rounded-lg p-3 bg-white border text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
               {months.map((month) => (
-                <option key={month} value={month}>{month}</option>
+                <option key={month} value={month}>
+                  {month}
+                </option>
               ))}
             </select>
             <select className="w-full rounded-lg p-3 bg-white border text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
               {years.map((year) => (
-                <option key={year} value={year}>{year}</option>
+                <option key={year} value={year}>
+                  {year}
+                </option>
               ))}
             </select>
           </div>
@@ -123,8 +147,10 @@ export function WorkHistoryForm() {
 
       <div className="flex justify-end gap-4">
         <Button type="submit">บันทึก</Button>
-        <Button variant="outline" type="button">ล้างข้อมูล</Button>
+        <Button variant="outline" type="button">
+          ล้างข้อมูล
+        </Button>
       </div>
     </form>
   )
-} 
+}

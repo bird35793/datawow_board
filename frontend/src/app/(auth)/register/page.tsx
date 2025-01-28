@@ -1,10 +1,11 @@
-import Image from 'next/image';
-import { RegisterForm } from '@/components/auth/register-form/RegisterForm';
+import Image from 'next/image'
+import { RegisterForm } from '@/components/auth/register-form/RegisterForm'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'ลงทะเบียน | Dekend เว็บหาที่ฝึกงาน หางาน สำหรับนักศึกษา',
-  description: 'สมัครสมาชิก Dekend สำหรับนักศึกษา ผู้หางาน และบริษัทที่ต้องการประกาศงาน',
+  description:
+    'สมัครสมาชิก Dekend สำหรับนักศึกษา ผู้หางาน และบริษัทที่ต้องการประกาศงาน',
 }
 
 export default function RegisterPage() {
@@ -37,5 +38,5 @@ export default function RegisterPage() {
         <RegisterForm />
       </div>
     </div>
-  );
-} 
+  )
+}

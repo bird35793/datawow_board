@@ -3,7 +3,8 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'แดชบอร์ด | Dekend เว็บหาที่ฝึกงาน หางาน สำหรับนักศึกษา',
-  description: 'จัดการข้อมูลส่วนตัว ดูสถิติการสมัครงาน และติดตามสถานะการสมัครงานของคุณ',
+  description:
+    'จัดการข้อมูลส่วนตัว ดูสถิติการสมัครงาน และติดตามสถานะการสมัครงานของคุณ',
 }
 
 export default function DashboardPage() {
@@ -14,4 +15,4 @@ export default function DashboardPage() {
       </div>
     </div>
   )
-} 
+}

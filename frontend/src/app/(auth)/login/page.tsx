@@ -4,7 +4,8 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'เข้าสู่ระบบ | Dekend เว็บหาที่ฝึกงาน หางาน สำหรับนักศึกษา',
-  description: 'เข้าสู่ระบบ Dekend เพื่อหางาน หาที่ฝึกงาน และจัดการโปรไฟล์ของคุณ',
+  description:
+    'เข้าสู่ระบบ Dekend เพื่อหางาน หาที่ฝึกงาน และจัดการโปรไฟล์ของคุณ',
 }
 
 export default function LoginPage() {
@@ -38,4 +39,4 @@ export default function LoginPage() {
       </div>
     </div>
   )
-} 
+}

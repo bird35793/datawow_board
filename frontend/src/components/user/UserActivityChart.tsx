@@ -8,7 +8,7 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 
@@ -31,13 +31,22 @@ export function UserActivityChart() {
       },
       title: {
         display: true,
-        text: 'ประวัติการเข้าใช้งานล่าสุด'
-      }
-    }
+        text: 'ประวัติการเข้าใช้งานล่าสุด',
+      },
+    },
   }
 
-  const labels = ['21/12', '22/12', '23/12', '24/12', '25/12', '26/12', '27/12', '28/12']
-  
+  const labels = [
+    '21/12',
+    '22/12',
+    '23/12',
+    '24/12',
+    '25/12',
+    '26/12',
+    '27/12',
+    '28/12',
+  ]
+
   const data = {
     labels,
     datasets: [
@@ -46,8 +55,8 @@ export function UserActivityChart() {
         data: labels.map(() => 0),
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.5)',
-      }
-    ]
+      },
+    ],
   }
 
   return (
@@ -55,4 +64,4 @@ export function UserActivityChart() {
       <Line options={options} data={data} />
     </div>
   )
-} 
+}

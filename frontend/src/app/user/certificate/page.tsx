@@ -1,9 +1,10 @@
-import { CertificateForm } from "@/components/user/certificate-form/CertificateForm"
+import { CertificateForm } from '@/components/user/certificate-form/CertificateForm'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'เพิ่มประวัติการอบรม | Dekend เว็บหาที่ฝึกงาน หางาน สำหรับนักศึกษา',
-  description: 'เพิ่มประวัติการอบรม ใบรับรอง และทักษะพิเศษต่างๆ เพื่อแสดงศักยภาพของคุณ',
+  description:
+    'เพิ่มประวัติการอบรม ใบรับรอง และทักษะพิเศษต่างๆ เพื่อแสดงศักยภาพของคุณ',
 }
 
 export default function CertificatePage() {
@@ -14,4 +15,4 @@ export default function CertificatePage() {
       </div>
     </div>
   )
-} 
+}

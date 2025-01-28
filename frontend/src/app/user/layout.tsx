@@ -1,6 +1,6 @@
-import Navbar from "@/components/frontend/shared/Navbar"
-import { Sidebar } from "@/components/user/shared/Sidebar"
-import { MobileNav } from "@/components/user/shared/MobileNav"
+import Navbar from '@/components/frontend/shared/Navbar'
+import { Sidebar } from '@/components/user/shared/Sidebar'
+import { MobileNav } from '@/components/user/shared/MobileNav'
 
 export default function UserLayout({
   children,
@@ -12,11 +12,9 @@ export default function UserLayout({
       <Navbar />
       <Sidebar />
       <div className="lg:pl-64 pt-16 pb-20 lg:pb-0">
-        <main className="container mx-auto">
-          {children}
-        </main>
+        <main className="container mx-auto">{children}</main>
       </div>
       <MobileNav />
     </div>
   )
-} 
+}

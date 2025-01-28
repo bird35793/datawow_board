@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -14,9 +14,9 @@ export function Sidebar() {
           <Link
             href="/user/dashboard"
             className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-              pathname === "/user/dashboard"
-                ? "text-white bg-white/10"
-                : "text-white/60 hover:text-white hover:bg-white/10"
+              pathname === '/user/dashboard'
+                ? 'text-white bg-white/10'
+                : 'text-white/60 hover:text-white hover:bg-white/10'
             }`}
           >
             <svg
@@ -39,9 +39,9 @@ export function Sidebar() {
           <Link
             href="/user/profile"
             className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-              pathname === "/user/profile"
-                ? "text-white bg-white/10"
-                : "text-white/60 hover:text-white hover:bg-white/10"
+              pathname === '/user/profile'
+                ? 'text-white bg-white/10'
+                : 'text-white/60 hover:text-white hover:bg-white/10'
             }`}
           >
             <svg
@@ -64,9 +64,9 @@ export function Sidebar() {
           <Link
             href="/user/education"
             className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-              pathname === "/user/education"
-                ? "text-white bg-white/10"
-                : "text-white/60 hover:text-white hover:bg-white/10"
+              pathname === '/user/education'
+                ? 'text-white bg-white/10'
+                : 'text-white/60 hover:text-white hover:bg-white/10'
             }`}
           >
             <svg
@@ -89,9 +89,9 @@ export function Sidebar() {
           <Link
             href="/user/certificate"
             className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-              pathname === "/user/certificate"
-                ? "text-white bg-white/10"
-                : "text-white/60 hover:text-white hover:bg-white/10"
+              pathname === '/user/certificate'
+                ? 'text-white bg-white/10'
+                : 'text-white/60 hover:text-white hover:bg-white/10'
             }`}
           >
             <svg
@@ -114,9 +114,9 @@ export function Sidebar() {
           <Link
             href="/user/work-history"
             className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-              pathname === "/user/work-history"
-                ? "text-white bg-white/10"
-                : "text-white/60 hover:text-white hover:bg-white/10"
+              pathname === '/user/work-history'
+                ? 'text-white bg-white/10'
+                : 'text-white/60 hover:text-white hover:bg-white/10'
             }`}
           >
             <svg
@@ -139,4 +139,4 @@ export function Sidebar() {
       </div>
     </aside>
   )
-} 
+}

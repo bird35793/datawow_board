@@ -1,9 +1,10 @@
-import { EducationForm } from "@/components/user/education-form/EducationForm"
+import { EducationForm } from '@/components/user/education-form/EducationForm'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'เพิ่มข้อมูลการศึกษา | Dekend เว็บหาที่ฝึกงาน หางาน สำหรับนักศึกษา',
-  description: 'เพิ่มประวัติการศึกษา วุฒิการศึกษา และผลการเรียนของคุณ เพื่อเพิ่มโอกาสในการได้งาน',
+  description:
+    'เพิ่มประวัติการศึกษา วุฒิการศึกษา และผลการเรียนของคุณ เพื่อเพิ่มโอกาสในการได้งาน',
 }
 
 export default function EducationPage() {
@@ -14,4 +15,4 @@ export default function EducationPage() {
       </div>
     </div>
   )
-} 
+}

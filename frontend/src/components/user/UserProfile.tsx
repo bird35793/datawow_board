@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,7 +14,7 @@ export function UserProfile() {
             fill
             className="rounded-full object-cover bg-gray-100"
           />
-          <button 
+          <button
             className="absolute bottom-0 right-0 p-2 bg-gray-800 rounded-full text-white hover:bg-gray-700"
             aria-label="Upload photo"
           >
@@ -39,14 +39,16 @@ export function UserProfile() {
             </svg>
           </button>
         </div>
-        
+
         <h2 className="text-lg font-medium mb-1 text-gray-900">รูปโปรไฟล์</h2>
         <div className="text-center mb-6">
-          <p className="text-gray-500 text-sm">คะแนนรวม: <span className="text-orange-500 font-medium">0/100</span></p>
+          <p className="text-gray-500 text-sm">
+            คะแนนรวม: <span className="text-orange-500 font-medium">0/100</span>
+          </p>
         </div>
 
         <div className="w-full space-y-3">
-          <Link 
+          <Link
             href="/user/profile"
             className="w-full flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200"
           >
@@ -66,7 +68,7 @@ export function UserProfile() {
             </svg>
             ข้อมูลส่วนตัว
           </Link>
-          <Link 
+          <Link
             href="/user/education"
             className="w-full flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200"
           >
@@ -86,7 +88,7 @@ export function UserProfile() {
             </svg>
             เพิ่มข้อมูลการศึกษา
           </Link>
-          <Link 
+          <Link
             href="/user/certificate"
             className="w-full flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200"
           >
@@ -106,7 +108,7 @@ export function UserProfile() {
             </svg>
             เพิ่มประวัติการอบรม
           </Link>
-          <Link 
+          <Link
             href="/user/work-history"
             className="w-full flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200"
           >
@@ -130,4 +132,4 @@ export function UserProfile() {
       </div>
     </div>
   )
-} 
+}

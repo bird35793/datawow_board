@@ -1,15 +1,15 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export function MobileNav() {
   const pathname = usePathname()
 
   const tabs = [
     {
-      title: "ภาพรวม",
-      href: "/user/dashboard",
+      title: 'ภาพรวม',
+      href: '/user/dashboard',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,8 +28,8 @@ export function MobileNav() {
       ),
     },
     {
-      title: "โปรไฟล์",
-      href: "/user/profile",
+      title: 'โปรไฟล์',
+      href: '/user/profile',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,8 +48,8 @@ export function MobileNav() {
       ),
     },
     {
-      title: "การศึกษา",
-      href: "/user/education",
+      title: 'การศึกษา',
+      href: '/user/education',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -68,8 +68,8 @@ export function MobileNav() {
       ),
     },
     {
-      title: "อารอบรม",
-      href: "/user/certificate",
+      title: 'อารอบรม',
+      href: '/user/certificate',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -88,8 +88,8 @@ export function MobileNav() {
       ),
     },
     {
-      title: "การทำงาน",
-      href: "/user/work-history",
+      title: 'การทำงาน',
+      href: '/user/work-history',
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -117,9 +117,7 @@ export function MobileNav() {
             key={tab.href}
             href={tab.href}
             className={`flex-1 flex flex-col items-center py-3 ${
-              pathname === tab.href
-                ? "text-emerald-500"
-                : "text-gray-600"
+              pathname === tab.href ? 'text-emerald-500' : 'text-gray-600'
             }`}
           >
             {tab.icon}
@@ -129,4 +127,4 @@ export function MobileNav() {
       </div>
     </div>
   )
-} 
+}
