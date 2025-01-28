@@ -64,7 +64,6 @@ export class CommentsController {
     return this.commentsService.create(createCommentDto, req.user?.id)
   }
 
-
   // สร้างเส้นทางสำหรับการดึงข้อมูล Comment ทั้งหมด
   @Get()
   @ApiOperation({
@@ -86,7 +85,6 @@ export class CommentsController {
   findAll() {
     return this.commentsService.findAll()
   }
-
 
   // สร้างเส้นทางสำหรับการดึงข้อมูล Comment ด้วย ID
   @Get(':id')
@@ -110,7 +108,6 @@ export class CommentsController {
   findOne(@Param('id') id: string) {
     return this.commentsService.findOne(+id)
   }
-
 
   // สร้างเส้นทางสำหรับการแก้ไขข้อมูล Comment
   @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
@@ -139,12 +136,11 @@ export class CommentsController {
   })
   update(
     @Param('id') id: string,
-    @Body() updateCommentDto: RequestUpdateCommentDto, 
+    @Body() updateCommentDto: RequestUpdateCommentDto,
     @Request() req
   ) {
     return this.commentsService.update(+id, updateCommentDto, req.user?.id)
   }
-
 
   // สร้างเส้นทางสำหรับการลบ Comment
   @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller

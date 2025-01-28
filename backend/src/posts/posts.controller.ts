@@ -64,7 +64,6 @@ export class PostsController {
     return this.postsService.create(createPostDto, req.user?.id)
   }
 
-
   // สร้างเส้นทางสำหรับการดึงข้อมูลโพสต์ทั้งหมด
   @Get()
   @ApiOperation({
@@ -86,7 +85,6 @@ export class PostsController {
   findAll() {
     return this.postsService.findAll()
   }
-
 
   // สร้างเส้นทางสำหรับการดึงข้อมูลโพสต์ด้วย ID
   @Get(':id')
@@ -110,7 +108,6 @@ export class PostsController {
   findOne(@Param('id') id: string) {
     return this.postsService.findOne(+id)
   }
-
 
   // สร้างเส้นทางสำหรับการแก้ไขข้อมูลโพสต์
   @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
@@ -137,10 +134,13 @@ export class PostsController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
   })
-  update(@Param('id') id: string, @Body() updatePostDto: RequestUpdatePostDto, @Request() req) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePostDto: RequestUpdatePostDto,
+    @Request() req
+  ) {
     return this.postsService.update(+id, updatePostDto, req.user?.id)
   }
-
 
   // สร้างเส้นทางสำหรับการลบข้อมูลโพสต์
   @UseGuards(JwtAuthGuard) // ป้องกันทั้ง controller
