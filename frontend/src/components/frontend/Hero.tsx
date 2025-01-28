@@ -1,43 +1,21 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { IPost } from '@/types/post'
 // Mock data สำหรับกระทู้ (post) - ชั่วคราว
-const mockPosts = [
-  { title: 'กระทู้ 1: หาที่ฝึกงานโปรแกรมเมอร์', author: 'สมชาย', id: 1 },
-  {
-    title: 'กระทู้ 2: แชร์ประสบการณ์ฝึกงานที่บริษัท XYZ',
-    author: 'สมหญิง',
-    id: 2,
-  },
-  {
-    title: 'กระทู้ 3: ถามเรื่องการเตรียมตัวสัมภาษณ์งาน',
-    author: 'น้องใหม่',
-    id: 3,
-  },
-  {
-    title: 'กระทู้ 4: แนะนำหนังสืออ่านสำหรับนักพัฒนา',
-    author: 'พี่ใหญ่',
-    id: 4,
-  },
-  {
-    title: 'กระทู้ 5: หาเพื่อนร่วมงานตำแหน่ง Front-end',
-    author: 'คนเก่ง',
-    id: 5,
-  },
-]
 
 const Hero = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [posts, setPosts] = useState(mockPosts) // ใช้ state สำหรับข้อมูลกระทู้ (เผื่ออนาคตดึงจาก API)
+  const [posts, setPosts] = useState<IPost[]>([]) // ใช้ state สำหรับข้อมูลกระทู้ (เผื่ออนาคตดึงจาก API)
 
   // ในอนาคต เราจะใช้ useEffect ดึงข้อมูลจาก API
-  // useEffect(() => {
-  //   // fetch('/api/posts') // หรือใช้ react-query, axios, ...
-  //   //   .then(res => res.json())
-  //   //   .then(data => setPosts(data));
-  // }, []);
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`) // หรือใช้ react-query, axios, ...
+      .then(res => res.json())
+      .then(data => setPosts(data));
+  }, []);
 
   return (
     <div className="relative bg-white pt-24 pb-16">
@@ -152,7 +130,7 @@ const Hero = () => {
                     {/* ลิงก์ไปหน้ากระทู้ */}
                     {post.title}
                   </Link>
-                  <p className="text-sm text-gray-500">โดย {post.author}</p>
+                  <p className="text-sm text-gray-500">โดย {post.author?.displayName}</p>
                 </li>
               ))}
             </ul>
