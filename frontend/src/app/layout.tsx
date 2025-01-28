@@ -1,21 +1,13 @@
-import type { Metadata } from 'next'
-import './globals.scss'
-
-export const metadata: Metadata = {
-  title: 'Datawow Webboard',
-  description: 'Webboard application',
-}
+import './globals.css'
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    <html lang="en">
-      <body>
-        {children}
-      </body>
+    <html lang="th">
+      <body>{children}</body>
     </html>
   )
 }

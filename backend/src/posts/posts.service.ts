@@ -94,13 +94,17 @@ export class PostsService {
     }
   }
 
-  async update(id: number, updatePostDto: RequestUpdatePostDto, userId: number) {
-    let duplicateField = '';
-    let message = '';
+  async update(
+    id: number,
+    updatePostDto: RequestUpdatePostDto,
+    userId: number
+  ) {
+    let duplicateField = ''
+    let message = ''
     try {
-      const existingPost = await this.prisma.post.findUnique({ where: { id } });
+      const existingPost = await this.prisma.post.findUnique({ where: { id } })
       if (!existingPost) {
-        throw new NotFoundException('ไม่พบโพสต์');
+        throw new NotFoundException('ไม่พบโพสต์')
       }
 
       // ตรวจสอบ title ที่ซ้ำกัน โดยยกเว้น id ของตัวเอง
@@ -111,11 +115,11 @@ export class PostsService {
             { NOT: { id } }, // ยกเว้น id ของตัวเอง
           ],
         },
-      });
+      })
 
       if (conflictingPost) {
-        duplicateField = 'title';
-        message = 'Title นี้มีอยู่แล้ว กรุณาใช้ Title อื่น';
+        duplicateField = 'title'
+        message = 'Title นี้มีอยู่แล้ว กรุณาใช้ Title อื่น'
 
         throw new BadRequestException({
           errors: [
@@ -124,7 +128,7 @@ export class PostsService {
               message: message,
             },
           ],
-        });
+        })
       }
 
       const updatedPost = await this.prisma.post.update({
@@ -135,9 +139,9 @@ export class PostsService {
           updatedAt: new Date(), // หรือใช้ @updatedAt ใน schema
         },
         include: { updatedByUser: { select: { displayName: true } } }, // คง include ไว้
-      });
+      })
 
-      return plainToInstance(ResponseUpdatePostDto, updatedPost);
+      return plainToInstance(ResponseUpdatePostDto, updatedPost)
     } catch (error) {
       if (message != '') {
         throw new BadRequestException({
@@ -147,14 +151,14 @@ export class PostsService {
               message: message,
             },
           ],
-        });
+        })
       } else if (error.code === 'P2025') {
-        throw new NotFoundException('ไม่พบโพสต์');
+        throw new NotFoundException('ไม่พบโพสต์')
       } else if (error.code === 'P2002') {
-        throw new ConflictException('Title นี้มีอยู่แล้ว'); // จัดการ P2002 ใน catch block ด้วย
+        throw new ConflictException('Title นี้มีอยู่แล้ว') // จัดการ P2002 ใน catch block ด้วย
       }
-      console.error('Error updating post:', error); // Log error เพื่อ debug
-      throw error; // Re-throw error เพื่อให้ NestJS จัดการต่อ
+      console.error('Error updating post:', error) // Log error เพื่อ debug
+      throw error // Re-throw error เพื่อให้ NestJS จัดการต่อ
     }
   }
 
