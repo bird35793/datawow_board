@@ -17,10 +17,10 @@ async function bootstrap() {
   })
 
   app.enableCors({
-    origin: ['https://localhost:3000', 'http://localhost:3000'], // ระบุ origins ที่อนุญาต
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // ระบุ HTTP methods ที่อนุญาต (ถ้าต้องการ)
-    credentials: true, // อนุญาตให้ส่ง cookies (ถ้าจำเป็น)
-    allowedHeaders: 'Content-Type, Accept', // ระบุ headers ที่อนุญาต (ถ้าต้องการ)
+    origin: ['https://localhost:3000', 'http://localhost:3000'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept, Authorization', // เพิ่ม Authorization เข้าไป
   })
 
   app.useGlobalPipes(

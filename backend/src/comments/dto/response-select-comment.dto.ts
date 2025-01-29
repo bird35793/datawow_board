@@ -1,6 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Expose } from 'class-transformer'
-import { ResponseCommentDto, CommentPostDto } from './response-comment.dto' // Import Base DTO
+import {
+  ResponseCommentDto,
+  CommentPostDto,
+  CommentUserDto,
+} from './response-comment.dto' // Import Base DTO
 
 export class ResponseSelectCommentDto extends ResponseCommentDto {
   @Expose()
@@ -20,13 +24,13 @@ export class ResponseSelectCommentDto extends ResponseCommentDto {
   updatedAt: Date
 
   @Expose()
-  @ApiProperty({ description: 'ข้อมูลผู้สร้าง Comment', type: CommentPostDto })
-  createdByUser: CommentPostDto
+  @ApiProperty({ description: 'ข้อมูลผู้สร้าง Comment', type: CommentUserDto })
+  createdByUser: CommentUserDto
 
   @Expose()
   @ApiProperty({
     description: 'ข้อมูลผู้แก้ไข Comment ล่าสุด',
-    type: CommentPostDto,
+    type: CommentUserDto,
   })
-  updatedByUser: CommentPostDto
+  updatedByUser: CommentUserDto
 }

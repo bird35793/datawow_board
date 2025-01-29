@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Expose } from 'class-transformer'
+import { Exclude, Expose } from 'class-transformer'
 import { ResponsePostDto, PostUserDto } from './response-post.dto'
+
+import { ResponseSelectCommentDto } from '../../comments/dto/response-select-comment.dto'
 
 export class ResponseSelectPostDto extends ResponsePostDto {
   @Expose()
@@ -27,4 +29,11 @@ export class ResponseSelectPostDto extends ResponsePostDto {
   @Expose()
   @ApiProperty({ description: 'ข้อมูลผู้แก้ไขโพสต์ล่าสุด', type: PostUserDto })
   updatedByUser: PostUserDto
+
+  @Exclude()
+  comments: ResponseSelectCommentDto
+
+  @Expose()
+  @ApiProperty({ description: 'ข้อมูลผู้แก้ไขโพสต์ล่าสุด', type: Number })
+  commentCount: number
 }

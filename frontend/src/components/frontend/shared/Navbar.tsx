@@ -101,6 +101,13 @@ export default function Navbar() {
             >
               ติดต่อเรา
             </Link>
+
+            <Link
+              href="/webboard"
+              className="text-gray-600 hover:text-green-500"
+            >
+              Webboard
+            </Link>
           </div>
 
           {/* Auth Section (ปรับตามเดิม) */}

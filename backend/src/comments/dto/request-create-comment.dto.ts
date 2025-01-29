@@ -12,9 +12,4 @@ export class RequestCreateCommentDto {
   @IsNumber({}, { message: 'PostId ต้องเป็นตัวเลข' })
   @IsNotEmpty({ message: 'กรุณากรอก PostId' })
   postId: number
-
-  @ApiProperty({ description: 'ไอดีผู้ใช้' })
-  @IsNumber({}, { message: 'UserId ต้องเป็นตัวเลข' })
-  @IsNotEmpty({ message: 'กรุณากรอก UserId' })
-  userId: number
 }

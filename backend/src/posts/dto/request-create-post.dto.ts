@@ -13,8 +13,4 @@ export class RequestCreatePostDto {
   @IsNotEmpty({ message: 'กรุณากรอก Content' })
   @IsString({ message: 'Content ต้องเป็นข้อความ' })
   content: string
-
-  @ApiProperty({ description: 'ไอดีผู้เขียน' })
-  @IsNotEmpty({ message: 'กรุณากรอก AuthorId' })
-  authorId: number
 }
