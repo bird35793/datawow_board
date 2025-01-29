@@ -1,0 +1,53 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node.js
+**/node_modules
+**/yarn-error.log
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+
+# Environment files
+**/.env*
+**/.env.*.local
+**/.env.*.development
+**/.env.*.test
+
+# Docker
+docker-compose.override.yml
+.dockerenv
+
+# Logs
+**/logs
+*.log
+
+# Build outputs
+**/build
+**/dist
+**/out
+.next
+.nuxt
+
+# IDE and editor files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Dependency managers
+**/package-lock.json
+**/yarn.lock
+
+# Temporary files
+**/*~
+**/*.tmp
+
+# Optional: หากใช้ Docker Compose ในการพัฒนาอย่างเดียว และไม่ต้องการ commit ขึ้น repo ให้เพิ่ม
+# docker-compose.yml
+
+# Optional: หากใช้ Nginx เฉพาะ local และ config ไม่ได้เปลี่ยนแปลงบ่อยๆ
+# nginx/nginx.conf
