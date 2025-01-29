@@ -30,6 +30,7 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: { username },
     })
+    
     if (user && (await bcrypt.compare(pass, user.password))) {
       const { password, ...result } = user
       return result
@@ -51,6 +52,10 @@ export class AuthService {
       })
       const { password, ...result } = user
       return result
+      // return {
+      //   username: user.username,
+      //   email: user.email
+      // }
     } catch (error) {
       if (error.code === 'P2002') {
         // Unique constraint failed

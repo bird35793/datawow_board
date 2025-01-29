@@ -27,7 +27,7 @@ import {
 import { ResponseCreateCommentDto } from './dto/response-create-comment.dto'
 import { ResponseSelectCommentDto } from './dto/response-select-comment.dto'
 import { ResponseUpdateCommentDto } from './dto/response-update-comment.dto'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 
 @Controller('comments')
 @ApiTags('comments')

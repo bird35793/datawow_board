@@ -27,7 +27,7 @@ import {
 import { ResponseCreatePostDto } from './dto/response-create-post.dto'
 import { ResponseSelectPostDto } from './dto/response-select-post.dto'
 import { ResponseUpdatePostDto } from './dto/response-update-post.dto'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 
 @Controller('posts')
 @ApiTags('posts')

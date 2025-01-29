@@ -16,6 +16,9 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/*": ["*"] // <-- Alias สำหรับ path ต่างๆ
+    }
   }
 }
