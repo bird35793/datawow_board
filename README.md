@@ -26,6 +26,9 @@
   <a href="https://www.prisma.io/" target="_blank" rel="noreferrer">
     <img src="https://img.shields.io/badge/Prisma-^6.2.1-blueviolet?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
   </a>
+  <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">
+    <img src="https://img.shields.io/badge/Tailwind_CSS-^3.4.1-%2306B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  </a>
 </p>
 
 ## ขั้นตอนการติดตั้ง
