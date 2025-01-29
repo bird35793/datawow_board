@@ -162,4 +162,32 @@ export class CommentsController {
   remove(@Param('id') id: string) {
     return this.commentsService.remove(+id)
   }
+
+  // สร้างเส้นทางสำหรับการค้นหา Comment ตาม Post ID
+  @Get('post/:postId') // เส้นทางใหม่: /comments/post/:postId
+  @ApiOperation({
+    summary: 'ค้นหา Comment ตาม Post ID',
+    description: 'ค้นหา Comment ทั้งหมดที่เกี่ยวข้องกับ Post ID ที่ระบุ',
+  })
+  @ApiOkResponse({
+    description: 'ดึงข้อมูล Comment สำเร็จ',
+    type: [ResponseSelectCommentDto],
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Post ID ไม่ถูกต้อง',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'ไม่ได้รับอนุญาต',
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'เกิดข้อผิดพลาดที่ฝั่ง Server',
+  })
+  findCommentsByPostId(
+    @Param('postId') postId: string // รับ postId จาก Parameter
+  ) {
+    return this.commentsService.findCommentsByPostId(+postId) // เรียก Service method
+  }
 }

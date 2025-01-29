@@ -64,10 +64,16 @@ export class PostsService {
           author: { select: { displayName: true } },
           createdByUser: { select: { displayName: true } },
           updatedByUser: { select: { displayName: true } },
+          comments: true, // ดึง comments มาด้วยเลย
         },
       })
 
-      return posts.map((post) => plainToInstance(ResponseSelectPostDto, post))
+      return posts.map((post) =>
+        plainToInstance(ResponseSelectPostDto, {
+          ...post,
+          commentCount: post.comments.length,
+        })
+      )
     } catch (error) {
       console.error('Error finding posts:', error)
       throw error
@@ -82,12 +88,19 @@ export class PostsService {
           author: { select: { displayName: true } },
           createdByUser: { select: { displayName: true } },
           updatedByUser: { select: { displayName: true } },
+          comments: true, // ดึง comments มาด้วยเลย
         },
       })
       if (!post) {
         throw new NotFoundException('ไม่พบโพสต์')
       }
-      return plainToInstance(ResponseSelectPostDto, post)
+
+      const postWithCommentCount = {
+        ...post,
+        commentCount: post.comments.length, // นับจำนวน comments
+      }
+
+      return plainToInstance(ResponseSelectPostDto, postWithCommentCount)
     } catch (error) {
       console.error('Error finding post:', error)
       throw error

@@ -21,6 +21,7 @@ export class CommentsService {
         data: {
           ...createCommentDto,
           createdBy: userId,
+          userId,
         },
         include: {
           user: { select: { displayName: true } },
@@ -181,6 +182,30 @@ export class CommentsService {
       return { message: 'ลบ Comment สำเร็จ' }
     } catch (error) {
       console.error('Error deleting comment:', error)
+      throw error
+    }
+  }
+
+  async findCommentsByPostId(postId: number) {
+    try {
+      const comments = await this.prisma.comment.findMany({
+        where: { postId }, // กรองตาม postId
+        include: {
+          user: { select: { displayName: true } },
+          post: { select: { title: true } },
+          createdByUser: { select: { displayName: true } },
+          updatedByUser: { select: { displayName: true } },
+        },
+        orderBy: {
+          createdAt: 'desc', // Sort from newest to oldest
+        },
+      })
+
+      return comments.map((comment) =>
+        plainToInstance(ResponseSelectCommentDto, comment)
+      )
+    } catch (error) {
+      console.error('Error finding comments by postId:', error)
       throw error
     }
   }
