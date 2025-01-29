@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common'
 import { RequestCreateCommentDto } from './dto/request-create-comment.dto'
 import { RequestUpdateCommentDto } from './dto/request-update-comment.dto'
-import { PrismaService } from 'src/prisma/prisma.service'
+import { PrismaService } from '../prisma/prisma.service'
 import { plainToInstance } from 'class-transformer'
 import { ResponseCreateCommentDto } from './dto/response-create-comment.dto'
 import { ResponseSelectCommentDto } from './dto/response-select-comment.dto'

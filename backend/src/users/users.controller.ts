@@ -1,4 +1,4 @@
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { RequestCreateUserDto } from './dto/request-create-user.dto'
 import { RequestUpdateUserDto } from './dto/request-update-user.dto'
 import { ResponseCreateUserDto } from './dto/response-create-user.dto'
