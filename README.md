@@ -92,6 +92,8 @@
     yarn dev
     ```
 
+3. **เข้าหน้าเว็บผ่าน http://localhost:3000
+
 ### การเชื่อมต่อ API
 
 Frontend เชื่อมต่อกับ Backend ผ่าน API ที่ `https://localhost:3001/api`
@@ -118,3 +120,10 @@ Frontend เชื่อมต่อกับ Backend ผ่าน API ที่
 *   แก้ไข component ต่างๆ ในโฟลเดอร์ `src/components`
 *   แก้ไขหน้าต่างๆ ในโฟลเดอร์ `src/app`
 *   ใช้ CSS หรือ tailwind framework เพื่อจัดการ styles
+
+## หมายเหตุ
+  * ตัว template front ส่วนนึง เคยเขียนมาก่อนหน้านั้นแล้ว เอามาเติมเพิ่มโค๊ดส่วน webboard
+  * ในส่วนการพัฒนานี้ทำตัวระบบ login เผื่อเอาไว้ แต่ไม่ได้ทำตัว refresh token
+  * ใช้ docker ในการทำ postgres แต่ใช้ port 5434 เนื่องจาก ชนกัน port ใน Local ที่ลง postgres ไว้
+  * ไม่ได้ทำการเขียน nginx เพื่อเชื่อม production
+  * Refer design - https://internth.com/
