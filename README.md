@@ -58,8 +58,7 @@
     docker-compose up -d
     ```
 
-    (คำอธิบายเพิ่มเติมเกี่ยวกับ Docker เช่น port ที่ใช้ หรือ volume ที่ mount)
-    ตัวอย่าง: Docker จะรัน Backend ที่พอร์ต 3001 และ Frontend ที่พอร์ต 3000 โดยฐานข้อมูล PostgreSQL จะอยู่ใน container ของตัวเอง
+    Docker จะรัน Backend ที่พอร์ต 3001 และ Frontend ที่พอร์ต 3000 โดยฐานข้อมูล PostgreSQL จะอยู่ใน container ของตัวเอง
 
 4.  **Migrate ฐานข้อมูล (Prisma):**
 
